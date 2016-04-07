@@ -1,10 +1,6 @@
-<div id="content" class="app-content" role="main">
-            <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
-              <div class="col">
-                <div class="app-content-body ">
-                  <div class="bg-light lter b-b wrapper-md padder-md">
-                    <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Daftar Tenaga Ahli</h1>
-                  </div>
+          <div class="bg-light lter b-b wrapper-md padder-md">
+            <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Daftar Tenaga Ahli</h1>
+          </div>
                   <div class="wrapper-lg bg-light">
                   <div class="row">
                     <div class="col-md-12">
@@ -90,7 +86,7 @@
                     <form name="dataForm" class="form-horizontal" novalidate="">
                         <!-- <input id="_token" name="_token" type="hidden" value="" ng-model="cpns._token"> -->
                         <div class="form-group error">
-                            <label for="nik" class="col-sm-3 control-label">NIK</label>
+                            <label for="nik" class="col-sm-3 control-label">NIK*</label>
                             <div class="col-sm-9">
                                 <input required type="text" class="form-control has-error" id="nik" name="nik" ng-model="ta.nik" ng-required="true">
                                 <span class="help-inline"
@@ -99,7 +95,7 @@
                         </div>
 
                         <div class="form-group error">
-                            <label for="nama" class="col-sm-3 control-label">Nama</label>
+                            <label for="nama" class="col-sm-3 control-label">Nama*</label>
                             <div class="col-sm-9">
                                 <input required type="text" class="form-control has-error" id="nama" name="nama" ng-model="ta.nama" ng-required="true">
                                 <span class="help-inline"
@@ -108,25 +104,70 @@
                         </div>
 
                         <div class="form-group error">
+                            <label for="jenis_kelamin" class="col-sm-3 control-label">Jenis Kelamin</label>
+                            <div class="col-sm-9">
+                                <input type="radio" ng-model="ta.jenis_kelamin" value="L" name="jenis_kelamin"> Laki-Laki
+                                <input type="radio" ng-model="ta.jenis_kelamin" value="P" name="jenis_kelamin"> Perempuan
+                            </div>
+                        </div>
+
+                        <div class="form-group error">
+                            <label for="tempat_lahir" class="col-sm-3 control-label">Tempat Lahir</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control has-error" id="tempat_lahir" name="tempat_lahir" ng-model="ta.tempat_lahir">
+                                <!-- <span class="help-inline"
+                                ng-show="dataForm.tempat_lahir.$invalid && dataForm.tempat_lahir.$touched">Field harus diisi</span> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group error">
+                            <label for="tanggal_lahir" class="col-sm-3 control-label">Tanggal Lahir</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control has-error" id="tanggal_lahir" name="tanggal_lahir" ng-model="ta.tanggal_lahir" placeholder="DD/MM/YYYY (Contoh: 25/11/1994)">
+                                <!-- <span class="help-inline"
+                                ng-show="dataForm.tanggal_lahir.$invalid && dataForm.tanggal_lahir.$touched">Field harus diisi</span> -->
+                            </div>
+                        </div>
+
+
+                        <div class="form-group error">
                             <label for="telp" class="col-sm-3 control-label">No. Telepon</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control has-error" id="telp" name="telp" ng-model="ta.telp" ng-required="true">
-                                <span class="help-inline"
-                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span>
+                                <input type="text" class="form-control has-error" id="telp" name="telp" ng-model="ta.telp">
+                                <!-- <span class="help-inline"
+                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group error">
+                            <label for="telp" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control has-error" id="telp" name="telp" ng-model="ta.telp">
+                                <!-- <span class="help-inline"
+                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group error">
+                            <label for="telp" class="col-sm-3 control-label">Alamat</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="alamat" name="alamat" ng-model="ta.alamat"></textarea>
+                                <!-- <span class="help-inline"
+                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
                             </div>
                         </div>
 
                         <div class="form-group error">
                             <label for="bidang" class="col-sm-3 control-label">Bidang Keahlian</label>
                             <div class="col-sm-9">
-                                <ui-select required class="form-control" id="bidang" name="bidang" multiple ng-model="ta.bidang" ng-required="true" style="width: 100%">
+                                <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="ta.bidang" style="width: 100%">
                                     <ui-select-match>{{$item.nama}}</ui-select-match>
                                     <ui-select-choices repeat="bidang.id as bidang in bidangs | filter:$select.search">
                                       <div ng-bind-html="bidang.nama | highlight: $select.search"></div>
                                     </ui-select-choices>
                                   </ui-select>
-                                <span class="help-inline"
-                                ng-show="dataForm.bidang.$invalid && dataForm.bidang.$touched">Field harus diisi</span>
+                                <!-- <span class="help-inline"
+                                ng-show="dataForm.bidang.$invalid && dataForm.bidang.$touched">Field harus diisi</span> -->
                             </div>
                         </div>
 
@@ -151,7 +192,3 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="btn-ok" ng-click="ok()">OK</button>
-                </div>
-            </div>
-        </div>
-    </div>

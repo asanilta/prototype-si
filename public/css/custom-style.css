@@ -4,7 +4,6 @@
 .bg-dark .nav > li:focus > a, .bg-dark .nav > li.active > a {
     color: #F3F5FD !important;
     background-color: #414348 !important;
-    font-weight: bold;
 
   }
 .bg-dark .nav > li:hover > a {

@@ -11,15 +11,30 @@
   <link rel="stylesheet" href="../public/css/template-style.css" type="text/css" />
   <link rel="stylesheet" href="../public/css/custom-style.css" type="text/css" />
   <link rel="stylesheet" href="../public/css/select.css" type="text/css" />
+  <link rel="stylesheet" href="../public/css/jquery-ui-smoothness-1.11.4.css" type="text/css">
+  <link rel="stylesheet" href="../public/css/elfinder.min.css" type="text/css">
+  <link rel="stylesheet" href="../public/css/theme.css" type="text/css">
 </head>
 <body ng-app="tesaApp">
-<div class="app app-header-fixed ">
-  <ng-include src="'partials/menu.html'"></ng-include>
-  <ng-view></ng-view>
+  <div class="app app-header-fixed ">
+    <ng-include src="'partials/menu.html'"></ng-include>
+    <div id="content" class="app-content" role="main">
+      <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
+        <div class="col">
+          <div class="app-content-body ">
+            <ng-view></ng-view>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<script src="../public/js/jquery.min.js"></script>
-<script src="../node_modules/angular/angular.js"></script>
+<!-- jQuery Plugins -->
+<script>window.$ = window.jQuery = require('../public/js/jquery-1.12.0.min.js');</script>
+<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../public/js/jquery-ui-1.11.4.js"></script>
+<script src="../public/js/elfinder.min.js"></script>
 <script src="../public/js/bootstrap.min.js"></script>
 <script src="../public/js/ui-load.js"></script>
 <script src="../public/js/ui-jp.config.js"></script>
@@ -39,7 +54,7 @@
 
 
 <script type="text/javascript">
-          $("body").tooltip({ selector: '[data-toggle="tooltip"]' });
+    $("body").tooltip({ selector: '[data-toggle="tooltip"]' });
 </script>
 
 </body>

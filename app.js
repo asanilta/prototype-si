@@ -8,5 +8,9 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
            .when('/tenaga-ahli', {
              templateUrl : 'tenaga-ahli.html',
              controller : 'tenagaAhliController'
-           });
+           })
+           .when('/dokumen', {
+             templateUrl: 'dokumen.html'
+           })
+         ;
    }]);
