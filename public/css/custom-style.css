@@ -1,0 +1,19 @@
+.bg-dark .nav > li > a {
+    color: #9699A0;
+}
+.bg-dark .nav > li:focus > a, .bg-dark .nav > li.active > a {
+    color: #F3F5FD !important;
+    background-color: #414348 !important;
+    font-weight: bold;
+
+  }
+.bg-dark .nav > li:hover > a {
+  color: #F3F5FD !important;
+  background-color: #202123 !important;
+}
+.bg-info {
+  height: 74px;
+}
+body {
+  background-color: #f4f5f5 !important;
+}

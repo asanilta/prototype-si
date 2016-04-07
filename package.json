@@ -1,0 +1,27 @@
+{
+  "name": "Prototype-SI",
+  "version": "1.0.0",
+  "description": "Sistem Informasi Pembantu Tender Proyek untuk Tesaputra Adiguna",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/asanilta/prototype-si.git"
+  },
+  "author": "Asanilta & Vanya",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/asanilta/prototype-si/issues"
+  },
+  "homepage": "https://github.com/asanilta/prototype-si#readme",
+  "dependencies": {
+    "angular": "^1.5.3",
+    "angular-route": "^1.5.3",
+    "mysql": "^2.10.2"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.0"
+  }
+}
