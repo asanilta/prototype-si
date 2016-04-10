@@ -16,6 +16,10 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
            .when('/dokumen', {
              templateUrl: 'views/dokumen.html'
            })
+           .when('/progres-tender', {
+            templateUrl: 'views/progres.html',
+            controller : 'progresController'
+           });
    }]);
 
 tesaApp.controller('tesaController', function ($scope, $http) {

@@ -29,7 +29,8 @@ class TenagaAhliController extends CI_Controller {
 		$data['jenis_kelamin'] = $this->input->post('jenis_kelamin');
 		$data['alamat'] = $this->input->post('alamat');
 		$data['tanggal_habis_ktp'] = $this->input->post('tanggal_habis_ktp');
-		$data['kontak'] = $this->input->post('kontak');
+		$data['telp'] = $this->input->post('telp');
+		$data['email'] = $this->input->post('email');
 
 		$result = $this->TenagaAhli->insert($data);
 		if($result)
@@ -59,7 +60,8 @@ class TenagaAhliController extends CI_Controller {
 		$data['jenis_kelamin'] = $this->input->post('jenis_kelamin');
 		$data['alamat'] = $this->input->post('alamat');
 		$data['tanggal_habis_ktp'] = $this->input->post('tanggal_habis_ktp');
-		$data['kontak'] = $this->input->post('kontak');
+		$data['telp'] = $this->input->post('telp');
+		$data['email'] = $this->input->post('email');
 
 		$result = $this->TenagaAhli->update($data['id_ktp'], $data);
 

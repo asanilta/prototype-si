@@ -1,0 +1,75 @@
+<div class="bg-light lter b-b wrapper-md padder-md">
+  <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Progres</h1>
+</div>
+
+<div class="wrapper-lg bg-light">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-body">
+				<div id="todo-lists"></div>
+
+				</div>
+				</div>
+				</div>
+				</div>
+				</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+$('#todo-lists').lobiList({
+        // lists: angular.element('[ng-controller="progresController"]').scope().todolists,
+        lists: [
+                  {
+                      title: 'Prakualifikasi',
+                      defaultStyle: 'lobilist-info',
+                      items: [
+                          {
+                              title: 'NPWP',
+                              description: 'Thunder fulfilled travellers folly, wading, lake.',
+                              dueDate: '2015-01-31'
+                          },
+                          {
+                              title: 'Dokumen C',
+                              description: 'Accepted was mollis',
+                              done: true
+                          },
+                          {
+                              title: 'Dokumen A',
+                              description: 'Rowed cloven frolic thereby, vivamus pining gown intruding strangers prank treacherously darkling.'
+                          },
+                          {
+                              title: 'Accepted was mollis',
+                              description: 'Rowed cloven frolic thereby, vivamus pining gown intruding strangers prank treacherously darkling.',
+                              dueDate: '2015-02-02',
+                              done: true
+                          }
+                      ]
+                  },
+                  {
+                      title: 'Kualifikasi',
+                      items: [
+                          {
+                              title: 'RAB',
+                              description: 'Thunder fulfilled travellers folly, wading, lake.',
+                              dueDate: '2015-01-31'
+                          },
+                          {
+                              title: 'CV Asanilta Fahda',
+                              description: 'Accepted was mollis',
+                              done: true
+                          },
+                          {
+                              title: 'Dokumen Lalala',
+                              description: 'Rowed cloven frolic thereby, vivamus pining gown intruding strangers prank treacherously darkling.'
+                          }
+                      ]
+                  }
+              ],
+        afterListAdd: function(lobilist, list){
+            var $dueDateInput = list.$el.find('form [name=dueDate]');
+            $dueDateInput.datepicker();
+        }
+    });
+});
+    </script>

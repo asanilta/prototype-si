@@ -23,37 +23,37 @@
                                     <tr>
                                         <th></th>
                                         <th>Nama</th>
+                                        <th>L/P</th>
                                         <th>No. Telepon</th>
-                                        <th>Email</th>
                                         <th>Bidang Keahlian</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    <tr ng-repeat-start="ta in tas | orderBy: 'nama' | filter:query">
+                                    <tr ng-repeat-start="ta in tas | orderBy: 'nama_tenaga_ahli' | filter:query">
                                         <td>
                                           <a ng-if="ta.expanded" ng-click="ta.expanded = false" class="text15"  data-toggle="tooltip" title="Tutup Detail" data-placement="bottom"><i class="fa fa-chevron-circle-down"></i></a>
                                           <a ng-if="!ta.expanded" ng-click="ta.expanded = true" class="text15"  data-toggle="tooltip" title="Lihat Detail" data-placement="bottom"><i class="fa fa-chevron-circle-right"></i></a>
                                         </td>
-                                        <td>{{ta.nama}}</td>
+                                        <td>{{ta.nama_tenaga_ahli}}</td>
+                                        <td>{{ta.jenis_kelamin}}</td>
                                         <td>{{ta.telp}}</td>
-                                        <td>{{ta.email}}</td>
                                         <td><span ng-repeat="bidang in ta.bidang">{{bidang.nama}}<span ng-show="!$last">, </span></span></td>
                                         <td>
-                                            <a class="text15" ng-click="searchDocument(ta.nik)" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
-                                            <a class="text15" ng-click="toggle('edit', ta.nik)" data-toggle="tooltip" title="Sunting" data-placement="bottom"><i class="fa fa-edit"></i></a> |
-                                            <a class="text15" ng-click="confirmDelete(ta.nik)" data-toggle="tooltip" title="Hapus" data-placement="bottom"><i class="fa fa-trash"></i></a>
+                                            <a class="text15" ng-click="searchDocument(ta.id_ktp)" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
+                                            <a class="text15" ng-click="toggle('edit', ta.id_ktp)" data-toggle="tooltip" title="Sunting" data-placement="bottom"><i class="fa fa-edit"></i></a> |
+                                            <a class="text15" ng-click="confirmDelete(ta.id_ktp)" data-toggle="tooltip" title="Hapus" data-placement="bottom"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <tr ng-repeat-end ng-if="ta.expanded">
                                       <td></td>
                                       <td colspan="5">
-                                          <span class="font-bold">NIK: </span> {{ta.nik}}<br/>
-                                          <span class="font-bold">Jenis Kelamin: </span> {{ta.jenis_kelamin}}<br/>
+                                          <span class="font-bold">ID KTP: </span> {{ta.id_ktp}}<br/>
                                           <span class="font-bold">Tempat Tanggal Lahir: </span> {{ta.tempat_lahir}}, {{ta.tanggal_lahir}}<br/>
-                                          <span class="font-bold">Umur: </span> {{ta.umur}}<br/>
                                           <span class="font-bold">Alamat: </span> {{ta.alamat}}<br/>
+                                          <span class="font-bold">Email: </span> {{ta.email}}<br/>
+                                          <span class="font-bold">Tanggal KTP Habis Berlaku: </span> {{ta.tanggal_habis_ktp}}<br/>
                                           <span class="font-bold">Tanggal Data Terakhir Diperbarui: </span> {{ta.updated_at}}<br/>
                                       </td>
                                     </tr>
@@ -86,20 +86,20 @@
                     <form name="dataForm" class="form-horizontal" novalidate="">
                         <!-- <input id="_token" name="_token" type="hidden" value="" ng-model="cpns._token"> -->
                         <div class="form-group error">
-                            <label for="nik" class="col-sm-3 control-label">NIK*</label>
+                            <label for="id_ktp" class="col-sm-3 control-label">id_ktp*</label>
                             <div class="col-sm-9">
-                                <input required type="text" class="form-control has-error" id="nik" name="nik" ng-model="ta.nik" ng-required="true">
+                                <input required type="text" class="form-control has-error" id="id_ktp" name="id_ktp" ng-model="ta.id_ktp" ng-required="true">
                                 <span class="help-inline"
-                                ng-show="dataForm.nik.$invalid && dataForm.nik.$touched">Field harus diisi</span>
+                                ng-show="dataForm.id_ktp.$invalid && dataForm.id_ktp.$touched">Field harus diisi</span>
                             </div>
                         </div>
 
                         <div class="form-group error">
                             <label for="nama" class="col-sm-3 control-label">Nama*</label>
                             <div class="col-sm-9">
-                                <input required type="text" class="form-control has-error" id="nama" name="nama" ng-model="ta.nama" ng-required="true">
+                                <input required type="text" class="form-control has-error" id="nama" name="nama" ng-model="ta.nama_tenaga_ahli" ng-required="true">
                                 <span class="help-inline"
-                                ng-show="dataForm.nama.$invalid && dataForm.nama.$touched">Field harus diisi</span>
+                                ng-show="dataForm.nama_tenaga_ahli.$invalid && dataForm.nama_tenaga_ahli.$touched">Field harus diisi</span>
                             </div>
                         </div>
 
