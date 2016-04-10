@@ -25,4 +25,22 @@ class TenagaAhli extends CI_Model{
 		else
 			return false;
 	}
+
+	public function delete($id)
+	{
+		$this->db->where('id_ktp', $id);
+		$result = $this->db->delete('tenaga_ahli');
+		
+		return $this->db->affected_rows();
+	}
+
+	public function update($data) {
+		$this->db->where('id_ktp', $id);
+		$result = $this->db->update('tenaga_ahli', $data);
+
+		if($result)
+			return true;
+		else
+			return false;
+	}
 }
