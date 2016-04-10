@@ -52,8 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['api/tenaga-ahli'] = 'TenagaAhliController/getTenagaAhli';
-$route['api/tenaga-ahli/insert/(:num)'] = 'TenagaAhliController/getTenagaAhli/$1';
-$route['api/tenaga-ahli/create']['POST'] = 'MahasiswaController/insertTenagaAhli';
+
+$route['api/tenaga-ahli/get/all'] = 'TenagaAhliController/getTenagaAhli';
+$route['api/tenaga-ahli/get/(:num)'] = 'TenagaAhliController/getTenagaAhli/$1';
+$route['api/tenaga-ahli/insert']['POST'] = 'MahasiswaController/insertTenagaAhli';
 $route['api/tenaga-ahli/update/(:num)']['POST'] = 'MahasiswaController/updateTenagaAhli/$1';
 $route['api/tenaga-ahli/delete']['POST'] = 'MahasiswaController/deleteTenagaAhli/$1';

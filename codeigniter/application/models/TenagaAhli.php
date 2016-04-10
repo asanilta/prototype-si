@@ -43,4 +43,11 @@ class TenagaAhli extends CI_Model{
 		else
 			return false;
 	}
+
+	public function get_bidang_by_id($id) {
+		$this->db->where('id_ktp', $id);
+		$result = $this->db->get('bidang_tenaga_ahli');
+
+		return $result->row_array();
+	}
 }
