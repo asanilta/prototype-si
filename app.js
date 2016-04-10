@@ -1,16 +1,19 @@
-var tesaApp = angular.module('tesaApp', [require('angular-route'),'ui.select','ngSanitize']);
+var tesaApp = angular.module('tesaApp', ['ngRoute','ui.select','ngSanitize']);
 tesaApp.config(['$routeProvider', function($routeProvider) {
+
+       // $locationProvider.html5Mode(true);
+
+
        $routeProvider
            .when('/', {
-             templateUrl : 'tenaga-ahli.html',
+             templateUrl : 'views/tenaga-ahli.html',
              controller : 'tenagaAhliController'
            })
            .when('/tenaga-ahli', {
-             templateUrl : 'tenaga-ahli.html',
+             templateUrl : 'views/tenaga-ahli.html',
              controller : 'tenagaAhliController'
            })
            .when('/dokumen', {
-             templateUrl: 'dokumen.html'
+             templateUrl: 'views/dokumen.html'
            })
-         ;
    }]);
