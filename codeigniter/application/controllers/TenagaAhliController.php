@@ -7,15 +7,35 @@ class TenagaAhliController extends CI_Controller {
 	}
 	
 	public function getTenagaAhli($id = null) {
-		if($id==null)
+		if($id==null){
 			$response['content'] = $this->TenagaAhli->get_all();
-		else $response['content'] = $this->TenagaAhli->get_by_id($id);
+			$i = 0;
+			foreach ($response['content'] as $content) {
+				$j = 0;
+				foreach ($this->TenagaAhli->get_bidang_by_id($content['id_ktp']) as $value) {
+					$response['content'][$i]['bidang_keahlian'][$j] = $value['bidang_keahlian'];
+					$j++;
+				}
+				$i++;
+			}
+		}
+		else {
+			$response['content'] = $this->TenagaAhli->get_by_id($id);
+			$j = 0;
+			foreach ($this->TenagaAhli->get_bidang_by_id($response['content']['id_ktp']) as $value) {
+				$response['content']['bidang_keahlian'][$j] = $value['bidang_keahlian'];
+				$j++;
+			}
+		}
 
 		if($response['content'] == null) {
 			$response['content'] = '';
-			if($id != null)
+			if($id != null) {
 				$response['message'] = 'KTP dengan nomor '.$id.' tidak ditemukan';
-			else $response['message'] = 'Tidak ada data tenaga ahli pada basis data';
+			}
+			else {
+				$response['message'] = 'Tidak ada data tenaga ahli pada basis data';
+			}
 		}
 
 		$this->sendJSON($response);
@@ -45,9 +65,9 @@ class TenagaAhliController extends CI_Controller {
 		$result = $this->TenagaAhli->delete($id);
 
 		if($result)
-			$response['message'] = 'Data tenaga ahli baru berhasil disimpan';
+			$response['message'] = 'Data tenaga ahli baru berhasil dihapus';
 		else
-			$response['message'] = 'Data tenaga ahli tidak berhasil disimpan';
+			$response['message'] = 'Data tenaga ahli tidak berhasil dihapus';
 
 		$this->sendJSON($response);
 	}

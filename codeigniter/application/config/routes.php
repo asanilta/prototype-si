@@ -58,3 +58,18 @@ $route['api/tenaga-ahli/get/(:num)'] = 'TenagaAhliController/getTenagaAhli/$1';
 $route['api/tenaga-ahli/insert']['POST'] = 'MahasiswaController/insertTenagaAhli';
 $route['api/tenaga-ahli/update/(:num)']['POST'] = 'MahasiswaController/updateTenagaAhli/$1';
 $route['api/tenaga-ahli/delete']['POST'] = 'MahasiswaController/deleteTenagaAhli/$1';
+
+
+$route['api/tender/get/all'] = 'TenderController/getTender';
+$route['api/tender/get/(:num)'] = 'TenderController/getTender/$1';
+$route['api/tender/update/(:num)']['POST'] = 'TenderController/updateTender/$1';
+$route['api/tender/delete']['POST'] = 'TenderController/deleteTender';
+$route['api/tender/delete/(:num)'] = 'TenderController/deleteTender/$1';
+$route['api/tender/gettenagaahli/(:num)'] = 'TenderController/getTenagaInTender/$1';
+
+
+$route['api/perusahaan/get/all'] = 'PerusahaanController/getPerusahaan';
+$route['api/perusahaan/get/(:num)'] = 'PerusahaanController/getPerusahaan/$1';
+$route['api/perusahaan/update/(:num)']['POST'] = 'PerusahaanController/updatePerusahaan/$1';
+$route['api/perusahaan/delete']['POST'] = 'PerusahaanController/deletePerusahaan';
+$route['api/perusahaan/delete/(:num)'] = 'PerusahaanController/deletePerusahaan/$1';
