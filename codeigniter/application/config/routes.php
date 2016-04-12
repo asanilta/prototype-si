@@ -65,7 +65,8 @@ $route['api/tender/get/(:num)'] = 'TenderController/getTender/$1';
 $route['api/tender/update/(:num)']['POST'] = 'TenderController/updateTender/$1';
 $route['api/tender/delete']['POST'] = 'TenderController/deleteTender';
 $route['api/tender/delete/(:num)'] = 'TenderController/deleteTender/$1';
-$route['api/tender/gettenagaahli/(:num)'] = 'TenderController/getTenagaInTender/$1';
+$route['api/tender/delete/(:num)/tenagaahli/(:num)'] = 'TenderController/deleteTenagaInTender/$1/$2';
+$route['api/tender/update/(:num)/perusahaan/(:num)']['POST'] = 'TenderController/updatePerusahaan/$1/$2';
 
 
 $route['api/perusahaan/get/all'] = 'PerusahaanController/getPerusahaan';
@@ -73,3 +74,6 @@ $route['api/perusahaan/get/(:num)'] = 'PerusahaanController/getPerusahaan/$1';
 $route['api/perusahaan/update/(:num)']['POST'] = 'PerusahaanController/updatePerusahaan/$1';
 $route['api/perusahaan/delete']['POST'] = 'PerusahaanController/deletePerusahaan';
 $route['api/perusahaan/delete/(:num)'] = 'PerusahaanController/deletePerusahaan/$1';
+
+$route['api/user/get/all'] = 'UserController/getUser';
+$route['api/user/get/(:any)'] = 'UserController/getUser/$1';
