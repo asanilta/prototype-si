@@ -26,8 +26,7 @@ class TenagaAhli extends CI_Model{
 			return false;
 	}
 
-	public function delete($id)
-	{
+	public function delete($id) {
 		$this->db->where('id_ktp', $id);
 		$result = $this->db->delete('tenaga_ahli');
 
@@ -42,6 +41,14 @@ class TenagaAhli extends CI_Model{
 			return true;
 		else
 			return false;
+	}
+
+	public function delete_tenaga_in_tender($id_tender, $id_ktp) {
+		$this->db->where('id_tender', $id_tender);
+		$this->db->where('id_ktp', $id_ktp);
+		$result = $this->db->delete('tenaga_tender');
+		
+		return $this->db->affected_rows();
 	}
 
 	public function get_bidang_by_id($id) {

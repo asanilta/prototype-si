@@ -17,6 +17,8 @@ class TenderController extends CI_Controller {
 					$response['content'][$i]['bidang_tender'][$j] = $value['bidang_tender'];
 					$j++;
 				}
+				$response['content'][$i]['tenaga_ahli'] = $this->getTenagaInTender($content['id_tender']);
+				$response['content'][$i]['persyaratan'] = $this->Tender->get_persyaratan_by_id($content['id_tender']);
 				$i++;
 			}
 		}
@@ -27,6 +29,12 @@ class TenderController extends CI_Controller {
 				$response['content']['bidang_tender'][$j] = $value['bidang_tender'];
 				$j++;
 			}
+			
+			$response['content']['tenaga_ahli'] = $this->getTenagaInTender($response['content']['id_tender']);
+			if($this->Tender->get_persyaratan_by_id($response['content']['id_tender']) != null)
+				$response['content']['persyaratan'] = $this->Tender->get_persyaratan_by_id($response['content']['id_tender']);
+			else
+				$response['content']['persyaratan'] = null;
 		}
 
 		if($response['content'] == null) {
@@ -49,7 +57,8 @@ class TenderController extends CI_Controller {
 		$data['url'] = $this->input->post('url');
 		$data['tenggat_prakualifikasi'] = $this->input->post('tenggat_prakualifikasi');
 		$data['tenggat_akhir'] = $this->input->post('tenggat_akhir');
-		$data['id_perusahaan'] = $this->input->post('id_perusahaan');
+		if($this->input->post('id_perusahaan') != null)
+			$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 
 		$result = $this->TenagaAhli->insert($data);
 		if($result)
@@ -60,7 +69,9 @@ class TenderController extends CI_Controller {
 		$this->sendJSON($response);
 	}
 
-	public function deleteTender($id) {
+	public function deleteTender($id=null) {
+		if($id==null) $id = $this->input->post('id_tender');
+
 		$result = $this->Tender->delete($id);
 
 		if($result)
@@ -92,23 +103,43 @@ class TenderController extends CI_Controller {
 	}
 
 	public function addTenagaToTender($id_tender, $id_ktp) {
-		//TODO: Jangan lupa yaaa
+		$result = $this->Tender->add_tenaga_ahli($id_tender, $id_ktp);
+		
+		if($result)
+			$response['message'] = 'Data tenaga pada tender berhasil disimpan';
+		else
+			$response['message'] = 'Data tenaga pada tender tidak berhasil disimpan';
+
+		$this->sendJSON($response);
+	}
+
+	public function deleteTenagaInTender($id_tender, $id_ktp) {
+		$result = $this->TenagaAhli->delete_tenaga_in_tender($id_tender, $id_ktp);
+
+		if($result)
+			$response['message'] = 'Data tenaga pada tender berhasil dihapus';
+		else
+			$response['message'] = 'Data tenaga pada tender tidak berhasil dihapus';
+
+		$this->sendJSON($response);
 	}
 
 	public function getTenagaInTender($id_tender) {
 		$temp = $this->Tender->get_tenaga_in_tender($id_tender);
 		$i = 0;
+		$data = null;
 		foreach ($temp as $temp1) {
-			$response['content'][$i] = $this->TenagaAhli->get_by_id($temp1['id_ktp']);
+			$data[$i] = $this->TenagaAhli->get_by_id($temp1['id_ktp']);
 			$j = 0;
-			foreach ($this->TenagaAhli->get_bidang_by_id($response['content'][$i]['id_ktp']) as $value) {
-				$response['content'][$i]['bidang_keahlian'][$j] = $value['bidang_keahlian'];
+			foreach ($this->TenagaAhli->get_bidang_by_id($data[$i]['id_ktp']) as $value) {
+				$data[$i]['bidang_keahlian'][$j] = $value['bidang_keahlian'];
 				$j++;
 			}
 			$i++;
 		}
-		$this->sendJSON($response);
+		return $data;
 	}
+
 
 	public function sendJSON($response) {
 		$this->output
