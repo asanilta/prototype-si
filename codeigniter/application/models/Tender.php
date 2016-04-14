@@ -30,7 +30,7 @@ class Tender extends CI_Model{
 	{
 		$this->db->where('id_tender', $id);
 		$result = $this->db->delete('tender');
-		
+
 		return $this->db->affected_rows();
 	}
 

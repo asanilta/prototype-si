@@ -5,7 +5,7 @@ class PerusahaanController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Perusahaan');
 	}
-	
+
 	public function getPerusahaan($id = null) {
 		if($id==null){
 			$response['content'] = $this->Perusahaan->get_all();
@@ -45,7 +45,8 @@ class PerusahaanController extends CI_Controller {
 		$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 		$data['nama_perusahaan'] = $this->input->post('nama_perusahaan');
 		$data['alamat'] = $this->input->post('alamat');
-		$data['kontak'] = $this->input->post('kontak');
+		$data['telp'] = $this->input->post('telp');
+		$data['email'] = $this->input->post('email');
 
 		$result = $this->Perusahaan->insert($data);
 		if($result)
@@ -71,12 +72,13 @@ class PerusahaanController extends CI_Controller {
 		$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 		$data['nama_perusahaan'] = $this->input->post('nama_perusahaan');
 		$data['alamat'] = $this->input->post('alamat');
-		$data['kontak'] = $this->input->post('kontak');
+		$data['telp'] = $this->input->post('telp');
+		$data['email'] = $this->input->post('email');
 
-		$result = $this->Perusahaan->update($data['id_perusahaan'], $data);
+		$result = $this->Perusahaan->update($data);
 
 		if($result)
-			$response['message'] = 'Data perusahaan baru berhasil diubah';
+			$response['message'] = 'Data perusahaan berhasil diubah';
 		else
 			$response['message'] = 'Data perusahaan tidak berhasil diubah';
 

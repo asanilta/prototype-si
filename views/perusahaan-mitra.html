@@ -1,0 +1,146 @@
+<div class="bg-light lter b-b wrapper-md padder-md">
+  <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Daftar Perusahaan Mitra</h1>
+</div>
+        <div class="wrapper-lg bg-light">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <div class="col-sm-4">
+                    <div class="input-group">
+                      <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="query">
+                      <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button"><i class="fa fa-search"></i></button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="pull-right">
+                    <button id="btn-add" class="btn m-b-sm m-r-sm pull-right btn-success" ng-click="toggle('add', 0)" style="display:inline-block"><i class="m-r-xs fa fa-plus"></i> Tambah Perusahaan Mitra Baru</button>
+                  </div>
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Nama</th>
+                              <th>Alamat</th>
+                              <th>No. Telepon</th>
+                              <th>Email</th>
+                              <th>Bidang</th>
+                              <th>Aksi</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr ng-repeat="perusahaan in perusahaans | orderBy: 'nama_perusahaan' | filter:query">
+                              <td>{{perusahaan.nama_perusahaan}}</td>
+                              <td>{{perusahaan.alamat}}</td>
+                              <td>{{perusahaan.telp}}</td>
+                              <td>{{perusahaan.email}}</td>
+                              <td><span ng-repeat="bidang in perusahaan.bidang">{{bidang.nama}}<span ng-show="!$last">, </span></span></td>
+                              <td>
+                                  <a class="text15" ng-click="searchDocument(perusahaan.id_perusahaan)" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
+                                  <a class="text15" ng-click="toggle('edit', perusahaan.id_perusahaan)" data-toggle="tooltip" title="Sunting" data-placement="bottom"><i class="fa fa-edit"></i></a> |
+                                  <a class="text15" ng-click="confirmDelete(perusahaan.id_perusahaan)" data-toggle="tooltip" title="Hapus" data-placement="bottom"><i class="fa fa-trash"></i></a>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              <!-- End of Table-to-load-the-data Part -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- /content -->
+
+
+<!-- Modal (Pop up when add/edit button clicked) -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
+      </div>
+      <div class="modal-body">
+          <form name="dataForm" class="form-horizontal" novalidate="">
+
+              <div class="form-group error">
+                  <label for="nama_perusahaan" class="col-sm-3 control-label">Nama Perusahaan*</label>
+                  <div class="col-sm-9">
+                      <input required type="text" class="form-control has-error" id="nama_perusahaan" name="nama_perusahaan" ng-model="perusahaan.nama_perusahaan" ng-required="true">
+                      <span class="help-inline"
+                      ng-show="dataForm.nama_perusahaan.$invalid && dataForm.nama_perusahaan.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="alamat" class="col-sm-3 control-label">Alamat*</label>
+                  <div class="col-sm-9">
+                      <textarea required class="form-control" id="alamat" name="alamat" ng-model="perusahaan.alamat" ng-required="true"></textarea>
+                      <span class="help-inline"
+                      ng-show="dataForm.alamat.$invalid && dataForm.alamat.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="telp" class="col-sm-3 control-label">No. Telepon*</label>
+                  <div class="col-sm-9">
+                      <input required type="text" class="form-control has-error" id="telp" name="telp" ng-model="perusahaan.telp" ng-required="true">
+                      <span class="help-inline"
+                      ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="email" class="col-sm-3 control-label">Email</label>
+                  <div class="col-sm-9">
+                      <input type="text" class="form-control has-error" id="email" name="email" ng-model="perusahaan.email">
+                      <!-- <span class="help-inline"
+                      ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
+                  </div>
+              </div>
+
+
+
+              <div class="form-group error">
+                  <label for="bidang" class="col-sm-3 control-label">Bidang</label>
+                  <div class="col-sm-9">
+                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="perusahaan.bidang" style="width: 100%">
+                          <ui-select-match>{{$item.nama}}</ui-select-match>
+                          <ui-select-choices repeat="bidang as bidang in bidangs | filter:$select.search">
+                            <div ng-bind-html="bidang | highlight: $select.search"></div>
+                          </ui-select-choices>
+                        </ui-select>
+                      <!-- <span class="help-inline"
+                      ng-show="dataForm.bidang.$invalid && dataForm.bidang.$touched">Field harus diisi</span> -->
+                  </div>
+              </div>
+
+
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal" style="margin-bottom: 0"><span class="glyphicon glyphicon-remove"></span> Batal</button>
+          <button type="button" class="btn btn-primary btn-success" id="btn-save" ng-click="save()" ng-disabled="dataForm.$invalid"><span class="glyphicon glyphicon-ok"></span> Simpan</button>
+      </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+          {{successMessage}}
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn-ok" data-dismiss="modal">OK</button>

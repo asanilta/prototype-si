@@ -56,9 +56,9 @@ $route['translate_uri_dashes'] = FALSE;
 /// API TENAGA AHLI ///
 $route['api/tenaga-ahli/get/all'] = 'TenagaAhliController/getTenagaAhli';
 $route['api/tenaga-ahli/get/(:num)'] = 'TenagaAhliController/getTenagaAhli/$1';
-$route['api/tenaga-ahli/insert']['POST'] = 'MahasiswaController/insertTenagaAhli';
-$route['api/tenaga-ahli/update/(:num)']['POST'] = 'MahasiswaController/updateTenagaAhli/$1';
-$route['api/tenaga-ahli/delete']['POST'] = 'MahasiswaController/deleteTenagaAhli/$1';
+$route['api/tenaga-ahli/insert']['POST'] = 'TenagaAhliController/insertTenagaAhli';
+$route['api/tenaga-ahli/update']['POST'] = 'TenagaAhliController/updateTenagaAhli';
+$route['api/tenaga-ahli/delete/(:num)'] = 'TenagaAhliController/deleteTenagaAhli/$1';
 
 
 /// API TENDER ///
@@ -66,6 +66,8 @@ $route['api/tender/get/all'] = 'TenderController/getTender';
 $route['api/tender/get/(:num)'] = 'TenderController/getTender/$1';
 $route['api/tender/insert']['POST'] = 'TenderController/insertTender';
 $route['api/tender/update/(:num)']['POST'] = 'TenderController/updateTender/$1';
+$route['api/tender/update']['POST'] = 'TenderController/updateTender';
+$route['api/tender/delete']['POST'] = 'TenderController/deleteTender';
 $route['api/tender/delete/(:num)'] = 'TenderController/deleteTender/$1';
 $route['api/tender/delete/(:num)/tenaga-ahli/(:num)'] = 'TenderController/deleteTenagaInTender/$1/$2';
 $route['api/tender/update/(:num)/tenaga-ahli/(:num)'] = 'TenderController/addTenagaToTender/$1/$2';
@@ -77,8 +79,8 @@ $route['api/tender/delete/(:num)/persyaratan/(:num)'] = 'TenderController/delete
 /// API PERUSAHAAN ///
 $route['api/perusahaan/get/all'] = 'PerusahaanController/getPerusahaan';
 $route['api/perusahaan/get/(:num)'] = 'PerusahaanController/getPerusahaan/$1';
-$route['api/perusahaan/update/(:num)']['POST'] = 'PerusahaanController/updatePerusahaan/$1';
-$route['api/perusahaan/delete']['POST'] = 'PerusahaanController/deletePerusahaan';
+$route['api/perusahaan/update']['POST'] = 'PerusahaanController/updatePerusahaan';
+$route['api/perusahaan/insert']['POST'] = 'PerusahaanController/insertPerusahaan';
 $route['api/perusahaan/delete/(:num)'] = 'PerusahaanController/deletePerusahaan/$1';
 
 

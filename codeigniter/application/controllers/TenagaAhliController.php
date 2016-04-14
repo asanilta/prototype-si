@@ -5,7 +5,7 @@ class TenagaAhliController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('TenagaAhli');
 	}
-	
+
 	public function getTenagaAhli($id = null) {
 		if($id==null){
 			$response['content'] = $this->TenagaAhli->get_all();
@@ -65,7 +65,7 @@ class TenagaAhliController extends CI_Controller {
 		$result = $this->TenagaAhli->delete($id);
 
 		if($result)
-			$response['message'] = 'Data tenaga ahli baru berhasil dihapus';
+			$response['message'] = 'Data tenaga ahli berhasil dihapus';
 		else
 			$response['message'] = 'Data tenaga ahli tidak berhasil dihapus';
 
@@ -82,11 +82,12 @@ class TenagaAhliController extends CI_Controller {
 		$data['tanggal_habis_ktp'] = $this->input->post('tanggal_habis_ktp');
 		$data['telp'] = $this->input->post('telp');
 		$data['email'] = $this->input->post('email');
+		$data['updated_at'] = now();
 
-		$result = $this->TenagaAhli->update($data['id_ktp'], $data);
+		$result = $this->TenagaAhli->update($data);
 
 		if($result)
-			$response['message'] = 'Data tenaga ahli baru berhasil diubah';
+			$response['message'] = 'Data tenaga ahli berhasil diubah';
 		else
 			$response['message'] = 'Data tenaga ahli tidak berhasil diubah';
 

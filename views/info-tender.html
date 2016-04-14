@@ -1,0 +1,28 @@
+<div class="bg-light lter b-b wrapper-md padder-md">
+  <h1 class="m-n font-bold h3 text-grey padder">Info Tender</h1>
+  <h4 class="m-n h4 text-grey padder">{{selectedTender.nama_tender}}</h4>
+</div>
+
+<div class="wrapper-lg bg-light">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div id="info-tender">
+          <button class="btn pull-right"><i class="fa fa-edit"></i> Ubah Data</button>
+          <ul>
+            <li><b>Nama Tender</b>: {{selectedTender.nama_tender}}</li>
+            <li><b>Instansi Pengada</b>: {{selectedTender.instansi_pengada}}</li>
+            <li><b>URL</b>: <a href="{{selectedTender.url}}" target="blank_">{{selectedTender.url}}</a></li>
+            <li><b>Status</b>: {{selectedTender.status}}</li>
+            <li><b>Tenggat Waktu Prakualifikasi</b>: {{selectedTender.tenggat_prakualifikasi}}</li>
+            <li><b>Tenggat Waktu Akhir</b>: {{selectedTender.tenggat_akhir}}</li>
+          </ul>
+          <br/>
+          <a class="pull-right text12" style="color:tomato"><i class="fa fa-times"></i> Batalkan Tender</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
