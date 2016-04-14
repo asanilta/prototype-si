@@ -21,7 +21,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        <th>Detail</th>
                                         <th>Nama</th>
                                         <th>L/P</th>
                                         <th>No. Telepon</th>
@@ -86,7 +86,7 @@
                     <form name="dataForm" class="form-horizontal" novalidate="">
                         <!-- <input id="_token" name="_token" type="hidden" value="" ng-model="cpns._token"> -->
                         <div class="form-group error">
-                            <label for="id_ktp" class="col-sm-3 control-label">id_ktp*</label>
+                            <label for="id_ktp" class="col-sm-3 control-label">ID KTP (NIK)*</label>
                             <div class="col-sm-9">
                                 <input required type="text" class="form-control has-error" id="id_ktp" name="id_ktp" ng-model="ta.id_ktp" ng-required="true">
                                 <span class="help-inline"
@@ -95,9 +95,9 @@
                         </div>
 
                         <div class="form-group error">
-                            <label for="nama" class="col-sm-3 control-label">Nama*</label>
+                            <label for="nama_tenaga_ahli" class="col-sm-3 control-label">Nama*</label>
                             <div class="col-sm-9">
-                                <input required type="text" class="form-control has-error" id="nama" name="nama" ng-model="ta.nama_tenaga_ahli" ng-required="true">
+                                <input required type="text" class="form-control has-error" id="nama_tenaga_ahli" name="nama_tenaga_ahli" ng-model="ta.nama_tenaga_ahli" ng-required="true">
                                 <span class="help-inline"
                                 ng-show="dataForm.nama_tenaga_ahli.$invalid && dataForm.nama_tenaga_ahli.$touched">Field harus diisi</span>
                             </div>
@@ -131,39 +131,49 @@
 
 
                         <div class="form-group error">
-                            <label for="telp" class="col-sm-3 control-label">No. Telepon</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control has-error" id="telp" name="telp" ng-model="ta.telp">
-                                <!-- <span class="help-inline"
-                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
-                            </div>
-                        </div>
-
-                        <div class="form-group error">
-                            <label for="telp" class="col-sm-3 control-label">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control has-error" id="telp" name="telp" ng-model="ta.telp">
-                                <!-- <span class="help-inline"
-                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
-                            </div>
-                        </div>
-
-                        <div class="form-group error">
                             <label for="telp" class="col-sm-3 control-label">Alamat</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" id="alamat" name="alamat" ng-model="ta.alamat"></textarea>
+                                <textarea required class="form-control" id="alamat" name="alamat" ng-model="ta.alamat" ng-required="true"></textarea>
+                                <span class="help-inline"
+                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group error">
+                            <label for="telp" class="col-sm-3 control-label">No. Telepon</label>
+                            <div class="col-sm-9">
+                                <input required type="text" class="form-control has-error" id="telp" name="telp" ng-model="ta.telp" ng-required="true">
+                                <span class="help-inline"
+                                ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group error">
+                            <label for="email" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control has-error" id="email" name="email" ng-model="ta.email">
                                 <!-- <span class="help-inline"
                                 ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
                             </div>
                         </div>
 
                         <div class="form-group error">
-                            <label for="bidang" class="col-sm-3 control-label">Bidang Keahlian</label>
+                            <label for="tanggal_habis_ktp" class="col-sm-3 control-label">Tanggal KTP Habis Berlaku</label>
                             <div class="col-sm-9">
-                                <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="ta.bidang" style="width: 100%">
-                                    <ui-select-match>{{$item.nama}}</ui-select-match>
-                                    <ui-select-choices repeat="bidang.id as bidang in bidangs | filter:$select.search">
-                                      <div ng-bind-html="bidang.nama | highlight: $select.search"></div>
+                                <input type="text" class="form-control has-error" id="tanggal_habis_ktp" name="tanggal_habis_ktp" ng-model="ta.tanggal_habis_ktp" placeholder="DD/MM/YYYY (Contoh: 25/11/1994)">
+                                <!-- <span class="help-inline"
+                                ng-show="dataForm.tanggal_lahir.$invalid && dataForm.tanggal_lahir.$touched">Field harus diisi</span> -->
+                            </div>
+                        </div>
+
+                        <div class="form-group error">
+                            <label for="bidang_keahlian" class="col-sm-3 control-label">Bidang Keahlian</label>
+                            <div class="col-sm-9">
+                                <ui-select class="form-control" id="bidang_keahlian" name="bidang_keahlian" multiple ng-model="ta.bidang_keahlian" style="width: 100%">
+                                    <ui-select-match>{{$item}}</ui-select-match>
+                                    <ui-select-choices repeat="bidang in bidangs | filter:$select.search">
+                                      <div ng-bind-html="bidang | highlight: $select.search"></div>
                                     </ui-select-choices>
                                   </ui-select>
                                 <!-- <span class="help-inline"

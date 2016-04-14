@@ -30,7 +30,7 @@ class TenagaAhli extends CI_Model{
 	{
 		$this->db->where('id_ktp', $id);
 		$result = $this->db->delete('tenaga_ahli');
-		
+
 		return $this->db->affected_rows();
 	}
 

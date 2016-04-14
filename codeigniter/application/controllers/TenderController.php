@@ -6,7 +6,7 @@ class TenderController extends CI_Controller {
 		$this->load->model('Tender');
 		$this->load->model('TenagaAhli');
 	}
-	
+
 	public function getTender($id = null) {
 		if($id==null){
 			$response['content'] = $this->Tender->get_all();
@@ -81,7 +81,7 @@ class TenderController extends CI_Controller {
 		$data['tenggat_akhir'] = $this->input->post('tenggat_akhir');
 		$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 
-		$result = $this->Tender->update($data['id_ktp'], $data);
+		$result = $this->Tender->update($data);
 
 		if($result)
 			$response['message'] = 'Data tender baru berhasil diubah';

@@ -7,11 +7,9 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
        $routeProvider
            .when('/', {
              templateUrl : 'views/info-tender.html',
-             controller : 'tenderController'
            })
            .when('/info-tender', {
              templateUrl : 'views/info-tender.html',
-             controller : 'tenderController'
            })
            .when('/tenaga-ahli', {
              templateUrl : 'views/tenaga-ahli.html',
@@ -19,6 +17,10 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
            })
            .when('/dokumen', {
              templateUrl: 'views/dokumen.html'
+           })
+           .when('/perusahaan-mitra', {
+             templateUrl: 'views/perusahaan-mitra.html',
+             controller : 'perusahaanController'
            })
            .when('/progres-tender', {
             templateUrl: 'views/progres.html',
