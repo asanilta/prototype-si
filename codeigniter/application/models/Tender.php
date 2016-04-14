@@ -30,7 +30,7 @@ class Tender extends CI_Model{
 	{
 		$this->db->where('id_tender', $id);
 		$result = $this->db->delete('tender');
-		
+
 		return $this->db->affected_rows();
 	}
 
@@ -45,7 +45,7 @@ class Tender extends CI_Model{
 	}
 
 	public function get_bidang_by_id($id) {
-		$this->db->where('id_tender', $data['id_tender']);
+		$this->db->where('id_tender', $id);
 		$result = $this->db->get('bidang_tender');
 		return $result->result_array();
 	}

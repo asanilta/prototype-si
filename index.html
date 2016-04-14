@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>SI Tesaputra Adiguna</title>
+  <title>TenderPro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <link rel="stylesheet" href="public/css/animate.css" type="text/css" />
   <link rel="stylesheet" href="public/css/font-awesome.min.css" type="text/css" />
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="public/css/lobilist.min.css">
   <!-- <base href="/SI/" /> -->
 </head>
-<body ng-app="tesaApp">
+<body ng-app="tesaApp" ng-controller="mainController">
   <div class="app app-header-fixed ">
     <ng-include src="'views/menu.html'"></ng-include>
     <div id="content" class="app-content" role="main">
@@ -30,8 +30,6 @@
       </div>
     </div>
   </div>
-</div>
-
 <script src="public/js/jquery-1.12.0.min.js"></script>
 <script src="public/js/jquery-ui-1.11.4.js"></script>
 <script src="public/js/bootstrap.min.js"></script>
@@ -52,7 +50,11 @@
 
 <!-- Angular Scripts -->
 <script src="app.js"></script>
+
+<script src="controllers/mainController.js"></script>
+<script src="controllers/tenderController.js"></script>
 <script src="controllers/tenagaAhliController.js"></script>
+<script src="controllers/progresController.js"></script>
 
 <!-- Plugins -->
 <script src="public/js/elfinder.min.js"></script>

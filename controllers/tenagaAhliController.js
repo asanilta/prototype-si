@@ -1,7 +1,7 @@
 tesaApp.controller('tenagaAhliController',['$scope','$http', function($scope, $http) {
 
-  var API = 'codeigniter/api/tenaga-ahli/get/all';
-  $http.get(API).success(function(data){
+  var API = 'codeigniter/api/tenaga-ahli/';
+  $http.get(API + 'get/all').success(function(data){
         $scope.tas = data.content;
     }).error(function(data){
         alert("Error");
