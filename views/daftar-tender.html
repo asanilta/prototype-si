@@ -1,5 +1,5 @@
 <div class="bg-light lter b-b wrapper-md padder-md">
-  <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Daftar Perusahaan Mitra</h1>
+  <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Daftar Tender Proyek yang Sedang Diikuti</h1>
 </div>
         <div class="wrapper-lg bg-light">
         <div class="row">
@@ -16,32 +16,28 @@
                     </div>
                   </div>
                   <div class="pull-right">
-                    <button id="btn-add" class="btn m-b-sm m-r-sm pull-right btn-success" ng-click="toggle('add', 0)" style="display:inline-block"><i class="m-r-xs fa fa-plus"></i> Tambah Perusahaan Mitra Baru</button>
+                    <button id="btn-add" class="btn m-b-sm m-r-sm pull-right btn-success" ng-click="toggle('add', 0)" style="display:inline-block"><i class="m-r-xs fa fa-plus"></i> Tambah Tender Proyek Baru</button>
                   </div>
                   <table class="table">
                       <thead>
                           <tr>
-                              <th>Nama</th>
-                              <th>Alamat</th>
-                              <th>No. Telepon</th>
-                              <th>Email</th>
+                              <th>Nama Tender</th>
+                              <th>Instansi Pengada</th>
+                              <th>Tenggat Waktu Prakualifikasi</th>
+                              <th>Tenggat Waktu Akhir</th>
+                              <th>Tim</th>
                               <th>Bidang</th>
-                              <th>Aksi</th>
                           </tr>
                       </thead>
                       <tbody>
 
-                          <tr ng-repeat="perusahaan in perusahaans | orderBy: 'nama_perusahaan' | filter:query">
-                              <td>{{perusahaan.nama_perusahaan}}</td>
-                              <td>{{perusahaan.alamat}}</td>
-                              <td>{{perusahaan.telp}}</td>
-                              <td>{{perusahaan.email}}</td>
-                              <td><span ng-repeat="bidang in perusahaan.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
-                              <td>
-                                  <a class="text15" ng-click="searchDocument(perusahaan.id_perusahaan)" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
-                                  <a class="text15" ng-click="toggle('edit', perusahaan.id_perusahaan)" data-toggle="tooltip" title="Sunting" data-placement="bottom"><i class="fa fa-edit"></i></a> |
-                                  <a class="text15" ng-click="confirmDelete(perusahaan.id_perusahaan)" data-toggle="tooltip" title="Hapus" data-placement="bottom"><i class="fa fa-trash"></i></a>
-                              </td>
+                          <tr ng-repeat="tender in tenders | orderBy: 'nama_tender' | filter:query">
+                              <td>{{tender.nama_tender}} <a href="{{tender.url}}" target="blank_"><i class="fa fa-external-link"></i></a></td>
+                              <td>{{tender.instansi_pengada}}</td>
+                              <td>{{tender.tenggat_prakualifikasi}}</td>
+                              <td>{{tender.tenggat_akhir}}</td>
+                              <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
+                              <td><span ng-repeat="bidang in tender.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
                           </tr>
                       </tbody>
                   </table>
@@ -72,48 +68,55 @@
           <form name="dataForm" class="form-horizontal" novalidate="">
 
               <div class="form-group error">
-                  <label for="nama_perusahaan" class="col-sm-3 control-label">Nama Perusahaan*</label>
+                  <label for="nama_tender" class="col-sm-3 control-label">Nama Tender*</label>
                   <div class="col-sm-9">
-                      <input required type="text" class="form-control has-error" id="nama_perusahaan" name="nama_perusahaan" ng-model="perusahaan.nama_perusahaan" ng-required="true">
+                      <input required type="text" class="form-control has-error" id="nama_tender" name="nama_tender" ng-model="tender.nama_tender" ng-required="true">
                       <span class="help-inline"
-                      ng-show="dataForm.nama_perusahaan.$invalid && dataForm.nama_perusahaan.$touched">Field harus diisi</span>
+                      ng-show="dataForm.nama_tender.$invalid && dataForm.nama_tender.$touched">Field harus diisi</span>
                   </div>
               </div>
 
               <div class="form-group error">
-                  <label for="alamat" class="col-sm-3 control-label">Alamat*</label>
+                  <label for="instansi_pengada" class="col-sm-3 control-label">Instansi Pengada*</label>
                   <div class="col-sm-9">
-                      <textarea required class="form-control" id="alamat" name="alamat" ng-model="perusahaan.alamat" ng-required="true"></textarea>
+                      <textarea required class="form-control" id="instansi_pengada" name="instansi_pengada" ng-model="tender.instansi_pengada" ng-required="true"></textarea>
                       <span class="help-inline"
-                      ng-show="dataForm.alamat.$invalid && dataForm.alamat.$touched">Field harus diisi</span>
+                      ng-show="dataForm.instansi_pengada.$invalid && dataForm.instansi_pengada.$touched">Field harus diisi</span>
                   </div>
               </div>
 
               <div class="form-group error">
-                  <label for="telp" class="col-sm-3 control-label">No. Telepon*</label>
+                  <label for="url" class="col-sm-3 control-label">URL*</label>
                   <div class="col-sm-9">
-                      <input required type="text" class="form-control has-error" id="telp" name="telp" ng-model="perusahaan.telp" ng-required="true">
+                      <input required type="text" class="form-control has-error" id="url" name="url" ng-model="tender.url" ng-required="true">
                       <span class="help-inline"
-                      ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span>
+                      ng-show="dataForm.url.$invalid && dataForm.url.$touched">Field harus diisi</span>
                   </div>
               </div>
 
               <div class="form-group error">
-                  <label for="email" class="col-sm-3 control-label">Email</label>
+                  <label for="tenggat_prakualifikasi" class="col-sm-3 control-label">Tenggat Waktu Prakualifikasi</label>
                   <div class="col-sm-9">
-                      <input type="text" class="form-control has-error" id="email" name="email" ng-model="perusahaan.email">
-                      <!-- <span class="help-inline"
-                      ng-show="dataForm.telp.$invalid && dataForm.telp.$touched">Field harus diisi</span> -->
+                      <input required ng-required="true" type="text" class="form-control has-error" id="tenggat_prakualifikasi" name="tenggat_prakualifikasi" ng-model="tender.tenggat_prakualifikasi">
+                      <span class="help-inline"
+                      ng-show="dataForm.tenggat_prakualifikasi.$invalid && dataForm.tenggat_prakualifikasi.$touched">Field harus diisi</span>
                   </div>
               </div>
 
-
+              <div class="form-group error">
+                  <label for="tenggat_akhir" class="col-sm-3 control-label">Tenggat Waktu Akhir</label>
+                  <div class="col-sm-9">
+                      <input required ng-required="true" type="text" class="form-control has-error" id="tenggat_akhir" name="tenggat_akhir" ng-model="tender.tenggat_akhir">
+                      <span class="help-inline"
+                      ng-show="dataForm.tenggat_akhir.$invalid && dataForm.tenggat_akhir.$touched">Field harus diisi</span>
+                  </div>
+              </div>
 
               <div class="form-group error">
                   <label for="bidang" class="col-sm-3 control-label">Bidang</label>
                   <div class="col-sm-9">
-                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="perusahaan.bidang" style="width: 100%">
-                          <ui-select-match>{{$item.nama}}</ui-select-match>
+                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="tender.bidang" style="width: 100%">
+                          <ui-select-match>{{$item}}</ui-select-match>
                           <ui-select-choices repeat="bidang as bidang in bidangs | filter:$select.search">
                             <div ng-bind-html="bidang | highlight: $select.search"></div>
                           </ui-select-choices>

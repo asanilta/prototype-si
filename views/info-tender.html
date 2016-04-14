@@ -17,6 +17,8 @@
             <li><b>Status</b>: {{selectedTender.status}}</li>
             <li><b>Tenggat Waktu Prakualifikasi</b>: {{selectedTender.tenggat_prakualifikasi}}</li>
             <li><b>Tenggat Waktu Akhir</b>: {{selectedTender.tenggat_akhir}}</li>
+            <li><b>Tim</b>: <span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></li>
+            <li><b>Bidang</b>: <span ng-repeat="bidang in tender.bidang">{{bidang}}<span ng-show="!$last">, </span></span></li>
           </ul>
           <br/>
           <a class="pull-right text12" style="color:tomato"><i class="fa fa-times"></i> Batalkan Tender</a>
