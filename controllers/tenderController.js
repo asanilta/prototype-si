@@ -5,4 +5,10 @@ tesaApp.controller('tenderController',['$scope','$http', function($scope, $http)
     }).error(function(data){
         alert("Error");
     });
+
+    $scope.selectTender = function(index) {
+      $scope.selectedTender = $scope.tenders[index];
+      $('#pilih-tender').modal('hide');
+       
+    }
 }]);

@@ -6,7 +6,7 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
 
        $routeProvider
            .when('/', {
-             templateUrl : 'views/info-tender.html',
+             templateUrl : 'views/daftar-tender.html',
            })
            .when('/info-tender', {
              templateUrl : 'views/info-tender.html',
