@@ -40,7 +40,6 @@ tesaApp.controller('tenagaAhliController',['$scope','$http', function($scope, $h
 
   $scope.save = function() {
     $('#myModal').modal('hide');
-    alert(JSON.stringify($scope.ta));
     switch ($scope.modalstate) {
       case 'add':
           $http({
