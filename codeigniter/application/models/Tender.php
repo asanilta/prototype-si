@@ -88,8 +88,11 @@ class Tender extends CI_Model{
 	}
 
 	public function get_tim_by_id($id) {
-		$this->db->where('id_tender',$id);
-		$result = $this->db->get('tim');
+		$this->db->select('tim.username, user.nama_lengkap')
+			->from('tim')
+			->join('user','user.username = tim.username')
+			->where('id_tender',$id);
+		$result = $this->db->get();
 		return $result->result_array();
 	}
 }
