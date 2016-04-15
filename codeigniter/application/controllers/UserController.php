@@ -25,6 +25,10 @@ class UserController extends CI_Controller {
 		$this->sendJSON($response);
 	}
 
+	public function getTender($username) {
+		
+	}
+
 	public function sendJSON($response) {
 		$this->output
 			->set_status_header(200)

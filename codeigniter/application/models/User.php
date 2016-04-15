@@ -16,4 +16,11 @@ class User extends CI_Model{
 
 		return $result->row_array();
 	}
+
+	public function get_tender_by_username($username) {
+		$this->db->where('username', $username);
+		$result = $this->db->get('tim');
+
+		return $result->result_array();
+	}
 }
