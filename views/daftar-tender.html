@@ -117,7 +117,7 @@
                   <div class="col-sm-9">
                       <ui-select class="form-control" id="tim" name="tim" multiple ng-model="tender.tim" style="width: 100%">
                           <ui-select-match>{{$item.nama_lengkap}}</ui-select-match>
-                          <ui-select-choices repeat="tim.username as tim.nama_lengkap in tims | filter:$select.search">
+                          <ui-select-choices repeat="tim as tim in tims | filter:$select.search">
                             <div ng-bind-html="tim.nama_lengkap | highlight: $select.search"></div>
                           </ui-select-choices>
                         </ui-select>
