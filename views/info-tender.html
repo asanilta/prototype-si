@@ -8,7 +8,8 @@
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-body">
-          <div id="info-tender">
+          <span ng-if="selectedTender==null"><button class="btn btn-primary" data-toggle="modal" data-target="#pilih-tender">Pilih Tender</button></span>
+          <div id="info-tender" ng-if="selectedTender!=null">
           <button class="btn pull-right" ng-click="toggle('edit')"><i class="fa fa-edit"></i> Ubah Data</button>
           <ul>
             <li><b>Nama Tender</b>: {{selectedTender.nama_tender}}</li>
@@ -25,7 +26,8 @@
           </p>
           <hr>
           <span class="m-n h4 text-grey padder">Perusahaan Mitra</span> <button class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiPerusahaanModal">Lihat Rekomendasi</button>
-          <table class="table m-t-md">
+          <div class="m-n padder" ng-if="selectedTender.perusahaan==null">Anda belum memilih perusahaan mitra untuk tender ini</div>
+          <table class="table m-t-md"  ng-if="selectedTender.perusahaan!=null">
               <thead>
                   <tr>
                       <th>Nama</th>
@@ -38,11 +40,11 @@
               </thead>
               <tbody>
                   <tr>
-                      <td>{{selected_perusahaan.nama_perusahaan}}</td>
-                      <td>{{selected_perusahaan.alamat}}</td>
-                      <td>{{selected_perusahaan.telp}}</td>
-                      <td>{{selected_perusahaan.email}}</td>
-                      <td><span ng-repeat="bidang in selected_perusahaan.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                      <td>{{selectedTender.perusahaan.nama_perusahaan}}</td>
+                      <td>{{selectedTender.perusahaan.alamat}}</td>
+                      <td>{{selectedTender.perusahaan.telp}}</td>
+                      <td>{{selectedTender.perusahaan.email}}</td>
+                      <td><span ng-repeat="bidang in selectedTender.perusahaan.bidang_perusahaan">{{bidang}}<span ng-show="!$last">, </span></span></td>
                       <td>
                           <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
                           <a class="text15" ng-click="removeFromTender('perusahaan',0)" data-toggle="tooltip" title="Hapus dari Tender" data-placement="bottom"><i class="fa fa-times"></i></a>
@@ -53,10 +55,11 @@
 
           <hr>
           <span class="m-n h4 text-grey padder">Tenaga Ahli</span> <button class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiTenagaAhliModal">Lihat Rekomendasi</button>
-          <table class="table m-t-md">
+          <div class="m-n padder" ng-if="selectedTender.tenaga_ahli==null">Anda belum memilih tenaga ahli untuk tender ini</div>
+          <table class="table m-t-md" ng-if="selectedTender.tenaga_ahli!=null">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>Detail</th>
                         <th>Nama</th>
                         <th>L/P</th>
                         <th>No. Telepon</th>
@@ -65,23 +68,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="tenaga_ahli in selected_tenaga_ahli">
-                        <td><i class="fa fa-chevron-circle-right"></i></td>
-                        <td>{{tenaga_ahli.nama_tenaga_ahli}}</td>
-                        <td>{{tenaga_ahli.jenis_kelamin}}</td>
-                        <td>{{tenaga_ahli.telp}}</td>
-                        <td><span ng-repeat="bidang in tenaga_ahli.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
+
+                    <tr ng-repeat-start="ta in selectedTender.tenaga_ahli | orderBy: 'nama_tenaga_ahli'">
+                        <td>
+                          <a ng-if="ta.expanded" ng-click="ta.expanded = false" class="text15"  data-toggle="tooltip" title="Tutup Detail" data-placement="bottom"><i class="fa fa-chevron-circle-down"></i></a>
+                          <a ng-if="!ta.expanded" ng-click="ta.expanded = true" class="text15"  data-toggle="tooltip" title="Lihat Detail" data-placement="bottom"><i class="fa fa-chevron-circle-right"></i></a>
+                        </td>
+                        <td>{{ta.nama_tenaga_ahli}}</td>
+                        <td>{{ta.jenis_kelamin}}</td>
+                        <td>{{ta.telp}}</td>
+                        <td><span ng-repeat="bidang in ta.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
                         <td>
                           <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
                           <a class="text15" ng-click="removeFromTender('perusahaan',0)" data-toggle="tooltip" title="Hapus dari Tender" data-placement="bottom"><i class="fa fa-times"></i></a>
                         </td>
+                    </tr>
+                    <tr ng-repeat-end ng-if="ta.expanded">
+                      <td></td>
+                      <td colspan="5">
+                          <span class="font-bold">ID KTP: </span> {{ta.id_ktp}}<br/>
+                          <span class="font-bold">Tempat Tanggal Lahir: </span> {{ta.tempat_lahir}}, {{ta.tanggal_lahir}}<br/>
+                          <span class="font-bold">Alamat: </span> {{ta.alamat}}<br/>
+                          <span class="font-bold">Email: </span> {{ta.email}}<br/>
+                          <span class="font-bold">Tanggal KTP Habis Berlaku: </span> {{ta.tanggal_habis_ktp}}<br/>
+                          <span class="font-bold">Tanggal Data Terakhir Diperbarui: </span> {{ta.updated_at}}<br/>
+                      </td>
                     </tr>
                 </tbody>
             </table>
 
             <hr>
             <span class="m-n h4 text-grey padder">Tender Proyek Relevan</span>
-            <table class="table m-t-md">
+            <div class="m-n padder" ng-if="selectedTender.rekomendasi.tender==null">Tidak ada tender proyek yang relevan dengan tender ini</div>
+            <table class="table m-t-md" ng-if="selectedTender.rekomendasi.tender!=null">
                   <thead>
                       <tr>
                           <th>Nama</th>
@@ -92,11 +111,11 @@
                       </tr>
                   </thead>
                   <tbody>
-                      <tr ng-repeat="tender in rekomendasi_tender">
+                      <tr ng-repeat="tender in selectedTender.rekomendasi.tender">
                           <td>{{tender.nama_tender}}</td>
                           <td>{{tender.instansi_pengada}}</td>
                           <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
-                          <td><span ng-repeat="bidang in tender.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                          <td><span ng-repeat="bidang in tender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></td>
                           <td>
                             <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a>
                           </td>
@@ -171,7 +190,7 @@
                   <div class="col-sm-9">
                       <ui-select class="form-control" id="tim" name="tim" multiple ng-model="tender.tim" style="width: 100%">
                           <ui-select-match>{{$item.nama_lengkap}}</ui-select-match>
-                          <ui-select-choices repeat="tim.username as tim.nama_lengkap in tims | filter:$select.search">
+                          <ui-select-choices repeat="tim as tim in tims | filter:$select.search">
                             <div ng-bind-html="tim.nama_lengkap | highlight: $select.search"></div>
                           </ui-select-choices>
                         </ui-select>
@@ -229,7 +248,7 @@
         <h4 class="modal-title" id="myModalLabel">Rekomendasi Perusahaan</h4>
       </div>
       <div class="modal-body">
-        <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="query">
+        <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="perusahaan-query">
         <table class="table">
             <thead>
                 <tr>
@@ -241,11 +260,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{rekomendasi_perusahaan.nama_perusahaan}}</td>
-                    <td>{{rekomendasi_perusahaan.telp}}</td>
-                    <td>{{rekomendasi_perusahaan.email}}</td>
-                    <td><span ng-repeat="bidang in rekomendasi_perusahaan.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                <tr ng-repeat="perusahaan in selectedTender.rekomendasi.perusahaan | filter:perusahaan-query">
+                    <td>{{perusahaan.nama_perusahaan}}</td>
+                    <td>{{perusahaan.telp}}</td>
+                    <td>{{perusahaan.email}}</td>
+                    <td><span ng-repeat="bidang in perusahaan.bidang_perusahaan">{{bidang}}<span ng-show="!$last">, </span></span></td>
                     <td>
                         <a class="text15" ng-click="addToTender('perusahaan',0)" data-toggle="tooltip" title="Tambahkan ke Tender" data-placement="bottom"><i class="fa fa-plus"></i></a>
                     </td>
@@ -266,7 +285,7 @@
         <h4 class="modal-title" id="myModalLabel">Rekomendasi Tenaga Ahli</h4>
       </div>
       <div class="modal-body">
-        <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="query">
+        <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="ta-query">
         <table class="table">
             <thead>
                 <tr>
@@ -278,11 +297,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{rekomendasi_tenaga_ahli.nama_tenaga_ahli}}</td>
-                    <td>{{rekomendasi_tenaga_ahli.jenis_kelamin}}</td>
-                    <td>{{rekomendasi_tenaga_ahli.telp}}</td>
-                    <td><span ng-repeat="bidang in rekomendasi_tenaga_ahli.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                <tr ng-repeat="ta in selectedTender.rekomendasi.tenaga_ahli | filter:ta-query">
+                    <td>{{ta.nama_tenaga_ahli}}</td>
+                    <td>{{ta.jenis_kelamin}}</td>
+                    <td>{{ta.telp}}</td>
+                    <td><span ng-repeat="bidang in ta.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
                     <td>
                         <a class="text15" ng-click="addToTender('tenaga_ahli',rekomendasi_tenaga_ahli.id_ktp)" data-toggle="tooltip" title="Tambahkan ke Tender" data-placement="bottom"><i class="fa fa-plus"></i></a>
                     </td>

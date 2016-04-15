@@ -36,7 +36,7 @@
                               <td>{{perusahaan.alamat}}</td>
                               <td>{{perusahaan.telp}}</td>
                               <td>{{perusahaan.email}}</td>
-                              <td><span ng-repeat="bidang in perusahaan.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                              <td><span ng-repeat="bidang in perusahaan.bidang_perusahaan">{{bidang}}<span ng-show="!$last">, </span></span></td>
                               <td>
                                   <a class="text15" ng-click="searchDocument(perusahaan.id_perusahaan)" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
                                   <a class="text15" ng-click="toggle('edit', perusahaan.id_perusahaan)" data-toggle="tooltip" title="Sunting" data-placement="bottom"><i class="fa fa-edit"></i></a> |
@@ -112,7 +112,7 @@
               <div class="form-group error">
                   <label for="bidang" class="col-sm-3 control-label">Bidang</label>
                   <div class="col-sm-9">
-                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="perusahaan.bidang" style="width: 100%">
+                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="perusahaan.bidang_perusahaan" style="width: 100%">
                           <ui-select-match>{{$item.nama}}</ui-select-match>
                           <ui-select-choices repeat="bidang as bidang in bidangs | filter:$select.search">
                             <div ng-bind-html="bidang | highlight: $select.search"></div>
