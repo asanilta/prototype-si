@@ -5,6 +5,7 @@ class TenderController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Tender');
 		$this->load->model('TenagaAhli');
+		$this->load->model('User');
 	}
 
 	public function getTender($id = null) {
@@ -19,6 +20,7 @@ class TenderController extends CI_Controller {
 				}
 				$response['content'][$i]['tenaga_ahli'] = $this->getTenagaInTender($content['id_tender']);
 				$response['content'][$i]['persyaratan'] = $this->Tender->get_persyaratan_by_id($content['id_tender']);
+				$response['content'][$i]['tim'] = $this->Tender->get_tim_by_id($content['id_tender']);
 				$i++;
 			}
 		}
@@ -35,6 +37,10 @@ class TenderController extends CI_Controller {
 				$response['content']['persyaratan'] = $this->Tender->get_persyaratan_by_id($response['content']['id_tender']);
 			else
 				$response['content']['persyaratan'] = null;
+			if($this->Tender->get_tim_by_id($response['content']['id_tender']) != null)
+				$response['content']['tim'] = $this->Tender->get_tim_by_id($response['content']['id_tender']);
+			else
+				$response['content']['tim'] = null;
 		}
 
 		if($response['content'] == null) {
@@ -135,6 +141,17 @@ class TenderController extends CI_Controller {
 				$data[$i]['bidang_keahlian'][$j] = $value['bidang_keahlian'];
 				$j++;
 			}
+			$i++;
+		}
+		return $data;
+	}
+
+	public function getTimInTender($id_tender) {
+		$temp = $this->Tender->get_tim_in_tender($id_tender);
+		$i = 0;
+		$data = null;
+		foreach ($temp as $temp1) {
+			$data[$i] = $this->User->get_by_username($temp1['username']);
 			$i++;
 		}
 		return $data;
