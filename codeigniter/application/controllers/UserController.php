@@ -13,7 +13,14 @@ class UserController extends CI_Controller {
 		else {
 			$response['content'] = $this->User->get_by_username($username);
 			$response['content']['tender'] = $this->User->get_tender_by_username($username);
-			$response['content']['reminder'] = $this->User->get_reminder_by_username($username);
+			
+			$reminder = $this->User->get_reminder_by_username($username);
+			$i = 0;
+			foreach ($reminder as $temp) {
+				$response['content']['reminder'][$i] = $temp['status'].' tender "'.$temp['nama_tender'].
+				'" <span style="color:red">'.$temp['deadline'].' hari lagi';
+				$i++;
+			}
 		}
 		
 		if($response['content'] == null) {
