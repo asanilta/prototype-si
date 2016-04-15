@@ -17,11 +17,93 @@
             <li><b>Status</b>: {{selectedTender.status}}</li>
             <li><b>Tenggat Waktu Prakualifikasi</b>: {{selectedTender.tenggat_prakualifikasi}}</li>
             <li><b>Tenggat Waktu Akhir</b>: {{selectedTender.tenggat_akhir}}</li>
-            <li><b>Tim</b>: <span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></li>
-            <li><b>Bidang</b>: <span ng-repeat="bidang in tender.bidang">{{bidang}}<span ng-show="!$last">, </span></span></li>
+            <li><b>Tim</b>: <span ng-repeat="tim in selectedTender.tim">{{tim.nama_lengkap}}<span ng-show="!$last">, </span></span></li>
+            <li><b>Bidang</b>: <span ng-repeat="bidang in selectedTender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></li>
           </ul>
-          <br/>
-          <a class="pull-right text12" style="color:tomato" ng-click="confirmDelete(selectedTender.id_tender)"><i class="fa fa-times"></i> Batalkan Tender</a>
+          <p style="text-align:right" class="m-lg">
+            <a class="text12" style="color:tomato; position: relative;" ng-click="confirmDelete(selectedTender.id_tender)"><i class="fa fa-times"></i> Batalkan Tender</a>
+          </p>
+          <hr>
+          <span class="m-n h4 text-grey padder">Perusahaan Mitra</span> <button class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiPerusahaanModal">Lihat Rekomendasi</button>
+          <table class="table m-t-md">
+              <thead>
+                  <tr>
+                      <th>Nama</th>
+                      <th>Alamat</th>
+                      <th>No. Telepon</th>
+                      <th>Email</th>
+                      <th>Bidang</th>
+                      <th>Aksi</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>{{selected_perusahaan.nama_perusahaan}}</td>
+                      <td>{{selected_perusahaan.alamat}}</td>
+                      <td>{{selected_perusahaan.telp}}</td>
+                      <td>{{selected_perusahaan.email}}</td>
+                      <td><span ng-repeat="bidang in selected_perusahaan.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                      <td>
+                          <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
+                          <a class="text15" ng-click="removeFromTender('perusahaan',0)" data-toggle="tooltip" title="Hapus dari Tender" data-placement="bottom"><i class="fa fa-times"></i></a>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <hr>
+          <span class="m-n h4 text-grey padder">Tenaga Ahli</span> <button class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiTenagaAhliModal">Lihat Rekomendasi</button>
+          <table class="table m-t-md">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nama</th>
+                        <th>L/P</th>
+                        <th>No. Telepon</th>
+                        <th>Bidang Keahlian</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="tenaga_ahli in selected_tenaga_ahli">
+                        <td><i class="fa fa-chevron-circle-right"></i></td>
+                        <td>{{tenaga_ahli.nama_tenaga_ahli}}</td>
+                        <td>{{tenaga_ahli.jenis_kelamin}}</td>
+                        <td>{{tenaga_ahli.telp}}</td>
+                        <td><span ng-repeat="bidang in tenaga_ahli.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                        <td>
+                          <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
+                          <a class="text15" ng-click="removeFromTender('perusahaan',0)" data-toggle="tooltip" title="Hapus dari Tender" data-placement="bottom"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+            <span class="m-n h4 text-grey padder">Tender Proyek Relevan</span>
+            <table class="table m-t-md">
+                  <thead>
+                      <tr>
+                          <th>Nama</th>
+                          <th>Instansi Pengada</th>
+                          <th>Tim</th>
+                          <th>Bidang</th>
+                          <th>Aksi</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr ng-repeat="tender in rekomendasi_tender">
+                          <td>{{tender.nama_tender}}</td>
+                          <td>{{tender.instansi_pengada}}</td>
+                          <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
+                          <td><span ng-repeat="bidang in tender.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                          <td>
+                            <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
         </div>
         </div>
       </div>
@@ -85,9 +167,23 @@
               </div>
 
               <div class="form-group error">
+                  <label for="tim" class="col-sm-3 control-label">Anggota Tim</label>
+                  <div class="col-sm-9">
+                      <ui-select class="form-control" id="tim" name="tim" multiple ng-model="tender.tim" style="width: 100%">
+                          <ui-select-match>{{$item.nama_lengkap}}</ui-select-match>
+                          <ui-select-choices repeat="tim.username as tim.nama_lengkap in tims | filter:$select.search">
+                            <div ng-bind-html="tim.nama_lengkap | highlight: $select.search"></div>
+                          </ui-select-choices>
+                        </ui-select>
+                      <!-- <span class="help-inline"
+                      ng-show="dataForm.bidang.$invalid && dataForm.bidang.$touched">Field harus diisi</span> -->
+                  </div>
+              </div>
+
+              <div class="form-group error">
                   <label for="bidang" class="col-sm-3 control-label">Bidang</label>
                   <div class="col-sm-9">
-                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="tender.bidang" style="width: 100%">
+                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="tender.bidang_tender" style="width: 100%">
                           <ui-select-match>{{$item}}</ui-select-match>
                           <ui-select-choices repeat="bidang as bidang in bidangs | filter:$select.search">
                             <div ng-bind-html="bidang | highlight: $select.search"></div>
@@ -108,14 +204,93 @@
   </div>
 </div>
 </div>
+
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content">
       <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
-          {{successMessage}}
+        {{successMessage}}
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="btn-ok" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-primary" id="btn-ok" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="rekomendasiPerusahaanModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Rekomendasi Perusahaan</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="query">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>No. Telepon</th>
+                    <th>Email</th>
+                    <th>Bidang</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{rekomendasi_perusahaan.nama_perusahaan}}</td>
+                    <td>{{rekomendasi_perusahaan.telp}}</td>
+                    <td>{{rekomendasi_perusahaan.email}}</td>
+                    <td><span ng-repeat="bidang in rekomendasi_perusahaan.bidang">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                    <td>
+                        <a class="text15" ng-click="addToTender('perusahaan',0)" data-toggle="tooltip" title="Tambahkan ke Tender" data-placement="bottom"><i class="fa fa-plus"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="rekomendasiTenagaAhliModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="myModalLabel">Rekomendasi Tenaga Ahli</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="query">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>L/P</th>
+                    <th>No. Telepon</th>
+                    <th>Bidang</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{rekomendasi_tenaga_ahli.nama_tenaga_ahli}}</td>
+                    <td>{{rekomendasi_tenaga_ahli.jenis_kelamin}}</td>
+                    <td>{{rekomendasi_tenaga_ahli.telp}}</td>
+                    <td><span ng-repeat="bidang in rekomendasi_tenaga_ahli.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                    <td>
+                        <a class="text15" ng-click="addToTender('tenaga_ahli',rekomendasi_tenaga_ahli.id_ktp)" data-toggle="tooltip" title="Tambahkan ke Tender" data-placement="bottom"><i class="fa fa-plus"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
