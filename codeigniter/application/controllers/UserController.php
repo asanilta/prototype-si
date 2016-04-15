@@ -14,7 +14,7 @@ class UserController extends CI_Controller {
 		else {
 			$response['content'] = $this->User->get_by_username($username);
 			$response['content']['tender'] = $this->User->get_tender_by_username($username);
-			$i = 0;
+
 			foreach ($response['content']['tender'] as &$tender) {
 				$temp = $this->Tender->get_tim_by_id($tender['id_tender']);
 				$j = 0;
@@ -23,7 +23,13 @@ class UserController extends CI_Controller {
 					$tender['tim'][$j] = $name['nama_lengkap'];
 					$j++;
 				}
-				$i++;
+				$j = 0;
+				foreach($temp as $temp2) {
+					$bidang = $this->Tender->get_bidang_by_id($temp2['id_tender']);
+					$tender['bidang_tender'][$j] = $bidang;
+					$j++;
+				}
+
 			}
 			$response['content']['reminder'] = $this->User->get_reminder_by_username($username);
 		}
