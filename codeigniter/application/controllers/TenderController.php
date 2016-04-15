@@ -162,6 +162,14 @@ class TenderController extends CI_Controller {
 		return $data;
 	}
 
+	public function getAllBidang() {
+		$temp = $this->Tender->get_all_bidang();
+		$response['content']['bidang_tender'] = [];
+		foreach($temp as $bidang) {
+			array_push($response['content']['bidang_tender'], $bidang['bidang_tender']);
+		}
+		return $this->sendJSON($response);
+	}
 
 	public function sendJSON($response) {
 		$this->output

@@ -16,6 +16,8 @@ class PerusahaanController extends CI_Controller {
 					$response['content'][$i]['bidang_perusahaan'][$j] = $value['bidang_perusahaan'];
 					$j++;
 				}
+				if($j == 0)
+					$response['content'][$i]['bidang_perusahaan'] = [];
 				$i++;
 			}
 		}
@@ -26,6 +28,8 @@ class PerusahaanController extends CI_Controller {
 				$response['content']['bidang_perusahaan'][$j] = $value['bidang_perusahaan'];
 				$j++;
 			}
+			if($j == 0)
+				$response['content']['bidang_perusahaan'] = [];
 		}
 
 		if($response['content'] == null) {

@@ -63,6 +63,7 @@ $route['api/tenaga-ahli/delete/(:num)'] = 'TenagaAhliController/deleteTenagaAhli
 
 /// API TENDER ///
 $route['api/tender/get/all'] = 'TenderController/getTender';
+$route['api/tender/get/bidang/all'] = 'TenderController/getAllBidang';
 $route['api/tender/get/(:num)'] = 'TenderController/getTender/$1';
 $route['api/tender/insert']['POST'] = 'TenderController/insertTender';
 $route['api/tender/update']['POST'] = 'TenderController/updateTender';
