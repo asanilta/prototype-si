@@ -20,8 +20,11 @@ class TenderController extends CI_Controller {
 				}
 				$response['content'][$i]['tenaga_ahli'] = $this->getTenagaInTender($content['id_tender']);
 				$response['content'][$i]['persyaratan'] = $this->Tender->get_persyaratan_by_id($content['id_tender']);
-				$response['content'][$i]['tim'] = $this->Tender->get_tim_by_id($content['id_tender']);
-				$i++;
+				$a = 0;
+				foreach($this->Tender->get_tim_by_id($response['content'][$i]['id_tender']) as $temp) {
+					$response['content'][$i]['tim'][$a] = $this->User->get_by_username($temp['username']);
+					$a++;
+				}
 			}
 		}
 		else {
@@ -37,10 +40,11 @@ class TenderController extends CI_Controller {
 				$response['content']['persyaratan'] = $this->Tender->get_persyaratan_by_id($response['content']['id_tender']);
 			else
 				$response['content']['persyaratan'] = null;
-			if($this->Tender->get_tim_by_id($response['content']['id_tender']) != null)
-				$response['content']['tim'] = $this->Tender->get_tim_by_id($response['content']['id_tender']);
-			else
-				$response['content']['tim'] = null;
+			$a = 0;
+			foreach($this->Tender->get_tim_by_id($response['content']['id_tender']) as $temp) {
+				$response['content']['tim'][$a] = $this->User->get_by_username($temp['username']);
+				$a++;
+			}
 		}
 
 		if($response['content'] == null) {
@@ -96,7 +100,8 @@ class TenderController extends CI_Controller {
 		$data['url'] = $this->input->post('url');
 		$data['tenggat_prakualifikasi'] = $this->input->post('tenggat_prakualifikasi');
 		$data['tenggat_akhir'] = $this->input->post('tenggat_akhir');
-		$data['id_perusahaan'] = $this->input->post('id_perusahaan');
+		if($this->input->post('id_perusahaan') != null)
+			$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 
 		$result = $this->Tender->update($data);
 

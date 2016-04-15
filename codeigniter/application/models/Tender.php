@@ -35,7 +35,7 @@ class Tender extends CI_Model{
 	}
 
 	public function update($data) {
-		$this->db->where('id_tender', $id);
+		$this->db->where('id_tender', $data['id_tender']);
 		$result = $this->db->update('tender', $data);
 
 		if($result)

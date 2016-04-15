@@ -65,15 +65,14 @@ $route['api/tenaga-ahli/delete/(:num)'] = 'TenagaAhliController/deleteTenagaAhli
 $route['api/tender/get/all'] = 'TenderController/getTender';
 $route['api/tender/get/(:num)'] = 'TenderController/getTender/$1';
 $route['api/tender/insert']['POST'] = 'TenderController/insertTender';
-$route['api/tender/update/(:num)']['POST'] = 'TenderController/updateTender/$1';
 $route['api/tender/update']['POST'] = 'TenderController/updateTender';
-$route['api/tender/delete']['POST'] = 'TenderController/deleteTender';
 $route['api/tender/delete/(:num)'] = 'TenderController/deleteTender/$1';
+$route['api/tender/delete']['POST'] = 'TenderController/deleteTender';
 $route['api/tender/delete/(:num)/tenaga-ahli/(:num)'] = 'TenderController/deleteTenagaInTender/$1/$2';
 $route['api/tender/update/(:num)/tenaga-ahli/(:num)'] = 'TenderController/addTenagaToTender/$1/$2';
+$route['api/tender/delete/(:num)/persyaratan/(:num)'] = 'TenderController/deletePersyaratan/$1/$2';
 $route['api/tender/update/(:num)/perusahaan/(:num)']['POST'] = 'TenderController/updatePerusahaan/$1/$2';
 $route['api/tender/update/(:num)/persyaratan']['POST'] = 'TenderController/updatePersyaratan/$1';
-$route['api/tender/delete/(:num)/persyaratan/(:num)'] = 'TenderController/deletePersyaratan/$1/$2';
 
 
 /// API PERUSAHAAN ///

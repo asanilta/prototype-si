@@ -82,7 +82,7 @@ class TenagaAhliController extends CI_Controller {
 		$data['tanggal_habis_ktp'] = $this->input->post('tanggal_habis_ktp');
 		$data['telp'] = $this->input->post('telp');
 		$data['email'] = $this->input->post('email');
-		$data['updated_at'] = now();
+		$data['updated_at'] = $this->input->post('updated_at');
 
 		$result = $this->TenagaAhli->update($data);
 
