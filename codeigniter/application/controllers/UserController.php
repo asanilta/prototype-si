@@ -4,6 +4,7 @@ class UserController extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('User');
+		$this->load->model('Tender');
 	}
 	
 	public function getUser($username = null) {
@@ -13,7 +14,17 @@ class UserController extends CI_Controller {
 		else {
 			$response['content'] = $this->User->get_by_username($username);
 			$response['content']['tender'] = $this->User->get_tender_by_username($username);
-			
+			$i = 0;
+			foreach ($response['content']['tender'] as &$tender) {
+				$temp = $this->Tender->get_tim_by_id($tender['id_tender']);
+				$j = 0;
+				foreach($temp as $temp2) {
+					$name = $this->User->get_by_username($temp2['username']);
+					$tender['tim'][$j] = $name['nama_lengkap'];
+					$j++;
+				}
+				$i++;
+			}
 			$response['content']['reminder'] = $this->User->get_reminder_by_username($username);
 		}
 		
