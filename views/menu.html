@@ -9,7 +9,7 @@
       <i class="glyphicon glyphicon-align-justify"></i>
     </button>
     <!-- brand -->
-    <a href="#" class="navbar-brand">
+    <a href="#/" class="navbar-brand">
       TenderPro
     </a>
     <!-- / brand -->
@@ -23,7 +23,7 @@
     <!-- nabar right -->
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+        <a href="#/" data-toggle="dropdown" class="dropdown-toggle">
           <i class="icon-bdg_alert text14"></i>
           <span class="visible-xs-inline">Notifikasi</span>
           <span class="badge badge-sm up bg-danger pull-right-xs">2</span>
@@ -53,14 +53,14 @@
             </div>
             <div class="panel-footer text-sm">
               <a href class="pull-right"><i class="icon-bdg_setting3"></i></a>
-              <a href="#notes" data-toggle="class:show animated fadeInRight">Lihat Semua Notifikasi</a>
+              <a href="#/notes" data-toggle="class:show animated fadeInRight">Lihat Semua Notifikasi</a>
             </div>
           </div>
         </div>
         <!-- / dropdown -->
       </li>
       <li class="dropdown">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+        <a href="#/" data-toggle="dropdown" class="dropdown-toggle">
           <i class="icon-bdg_search text14"></i>
         </a>
         <!-- dropdown -->
@@ -68,13 +68,13 @@
           <form action="">
             <i class="pull-left glyphicon glyphicon-search"></i>
               <input type="text" class="pull-left" placeholder="Type Here">
-            <a href="#" class="remove-search"><i class="pull-right icon-bdg_cross"></i></a>
+            <a href="#/" class="remove-search"><i class="pull-right icon-bdg_cross"></i></a>
           </form>
         </div>
         <!-- / dropdown -->
       </li>
       <li class="dropdown">
-        <a href="#" data-toggle="dropdown" class="bg-blue profile-header dropdown-toggle clear" data-toggle="dropdown">
+        <a href="#/" data-toggle="dropdown" class="bg-blue profile-header dropdown-toggle clear" data-toggle="dropdown">
           <!-- <i class="icon-bdg_people"></i> -->
           <span class="hidden-sm hidden-md m-r-xl"> {{username}}</span> <i class="fa fa-caret-down pull-right"></i>
         </a>
@@ -102,23 +102,23 @@
 
 <aside id="aside" class="app-aside hidden-xs bg-dark">
 <nav ui-nav class="navi clearfix">
-        <ul class="nav">
+        <ul class="nav" bs-active-link>
           <li class="hidden-folded m-t text-white text-xs padder-md padder-v-sm">
             <span>{{selectedTender.nama_tender}}</span>
           </li>
 
 
-            <div ng-if="selectedTender!=null">
+            <div ng-if="selectedTender!=null" bs-active-link>
           <li>
-            <a href="#info-tender">
+            <a href="#/info-tender">
               <i class="fa fa-info-circle"></i>
-              <span>Info</span>
+              <span>Info Tender</span>
             </a>
           </li>
           <li>
-            <a href="#progres-tender">
+            <a href="#/progres-tender">
               <i class="fa fa-check-square-o"></i>
-              <span>Progres</span>
+              <span>Progres Tender</span>
             </a>
           </li>
         </div>
@@ -137,19 +137,19 @@
           </li>
 
           <li>
-            <a href="#tender">
+            <a href="#/tender">
               <i class="fa fa-gavel"></i>
               <span>Tender Proyek</span>
             </a>
           </li>
           <li>
-            <a href="#perusahaan-mitra">
+            <a href="#/perusahaan-mitra">
               <i class="fa fa-building"></i>
               <span>Perusahaan Mitra</span>
             </a>
           </li>
           <li>
-            <a href="#tenaga-ahli">
+            <a href="#/tenaga-ahli">
               <i class="fa fa-users"></i>
               <span>Tenaga Ahli</span>
             </a>

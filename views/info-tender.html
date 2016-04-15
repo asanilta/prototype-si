@@ -9,7 +9,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div id="info-tender">
-          <button class="btn pull-right"><i class="fa fa-edit"></i> Ubah Data</button>
+          <button class="btn pull-right" ng-click="toggle('edit')"><i class="fa fa-edit"></i> Ubah Data</button>
           <ul>
             <li><b>Nama Tender</b>: {{selectedTender.nama_tender}}</li>
             <li><b>Instansi Pengada</b>: {{selectedTender.instansi_pengada}}</li>
@@ -21,10 +21,101 @@
             <li><b>Bidang</b>: <span ng-repeat="bidang in tender.bidang">{{bidang}}<span ng-show="!$last">, </span></span></li>
           </ul>
           <br/>
-          <a class="pull-right text12" style="color:tomato"><i class="fa fa-times"></i> Batalkan Tender</a>
+          <a class="pull-right text12" style="color:tomato" ng-click="confirmDelete(selectedTender.id_tender)"><i class="fa fa-times"></i> Batalkan Tender</a>
         </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
+      </div>
+      <div class="modal-body">
+          <form name="dataForm" class="form-horizontal" novalidate="">
+
+              <div class="form-group error">
+                  <label for="nama_tender" class="col-sm-3 control-label">Nama Tender*</label>
+                  <div class="col-sm-9">
+                      <input required type="text" class="form-control has-error" id="nama_tender" name="nama_tender" ng-model="tender.nama_tender" ng-required="true">
+                      <span class="help-inline"
+                      ng-show="dataForm.nama_tender.$invalid && dataForm.nama_tender.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="instansi_pengada" class="col-sm-3 control-label">Instansi Pengada*</label>
+                  <div class="col-sm-9">
+                      <textarea required class="form-control" id="instansi_pengada" name="instansi_pengada" ng-model="tender.instansi_pengada" ng-required="true"></textarea>
+                      <span class="help-inline"
+                      ng-show="dataForm.instansi_pengada.$invalid && dataForm.instansi_pengada.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="url" class="col-sm-3 control-label">URL*</label>
+                  <div class="col-sm-9">
+                      <input required type="text" class="form-control has-error" id="url" name="url" ng-model="tender.url" ng-required="true">
+                      <span class="help-inline"
+                      ng-show="dataForm.url.$invalid && dataForm.url.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="tenggat_prakualifikasi" class="col-sm-3 control-label">Tenggat Waktu Prakualifikasi</label>
+                  <div class="col-sm-9">
+                      <input required ng-required="true" type="text" class="form-control has-error" id="tenggat_prakualifikasi" name="tenggat_prakualifikasi" ng-model="tender.tenggat_prakualifikasi">
+                      <span class="help-inline"
+                      ng-show="dataForm.tenggat_prakualifikasi.$invalid && dataForm.tenggat_prakualifikasi.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="tenggat_akhir" class="col-sm-3 control-label">Tenggat Waktu Akhir</label>
+                  <div class="col-sm-9">
+                      <input required ng-required="true" type="text" class="form-control has-error" id="tenggat_akhir" name="tenggat_akhir" ng-model="tender.tenggat_akhir">
+                      <span class="help-inline"
+                      ng-show="dataForm.tenggat_akhir.$invalid && dataForm.tenggat_akhir.$touched">Field harus diisi</span>
+                  </div>
+              </div>
+
+              <div class="form-group error">
+                  <label for="bidang" class="col-sm-3 control-label">Bidang</label>
+                  <div class="col-sm-9">
+                      <ui-select class="form-control" id="bidang" name="bidang" multiple ng-model="tender.bidang" style="width: 100%">
+                          <ui-select-match>{{$item}}</ui-select-match>
+                          <ui-select-choices repeat="bidang as bidang in bidangs | filter:$select.search">
+                            <div ng-bind-html="bidang | highlight: $select.search"></div>
+                          </ui-select-choices>
+                        </ui-select>
+                      <!-- <span class="help-inline"
+                      ng-show="dataForm.bidang.$invalid && dataForm.bidang.$touched">Field harus diisi</span> -->
+                  </div>
+              </div>
+
+
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal" style="margin-bottom: 0"><span class="glyphicon glyphicon-remove"></span> Batal</button>
+          <button type="button" class="btn btn-primary btn-success" id="btn-save" ng-click="save()" ng-disabled="dataForm.$invalid"><span class="glyphicon glyphicon-ok"></span> Simpan</button>
+      </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+          {{successMessage}}
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn-ok" data-dismiss="modal">OK</button>

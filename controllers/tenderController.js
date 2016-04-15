@@ -11,8 +11,10 @@ tesaApp.controller('tenderController',['$scope','$http', function($scope, $http)
       $('#pilih-tender').modal('hide');
     }
 
-    $scope.toggle = function(modalstate, id) {
-      $scope.dataForm.$setUntouched();
+    $scope.bidangs = ["IT","Agrikultur","Tata Kota"];
+
+    $scope.toggle = function(modalstate) {
+      // $scope.dataForm.$setUntouched();
       $scope.error = "";
       $scope.modalstate = modalstate;
       switch (modalstate) {
@@ -22,13 +24,11 @@ tesaApp.controller('tenderController',['$scope','$http', function($scope, $http)
               break;
           case 'edit':
               $scope.form_title = "Edit Data Tender Proyek";
-              $http.get(API + 'get/' +id).success(function(data){
-                    $scope.tender = data.content;
-                }).error(function(data){
-                    alert(data.error);
-                });
+              $scope.tender = $scope.selectedTender;
+                break;
           default:
-              break;
+          alert("tes4");
+            break;
       }
       $('#myModal').modal('show');
     }
@@ -81,4 +81,5 @@ tesaApp.controller('tenderController',['$scope','$http', function($scope, $http)
               return false;
           }
     }
+
 }]);

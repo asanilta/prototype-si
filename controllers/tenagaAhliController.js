@@ -15,8 +15,6 @@ tesaApp.controller('tenagaAhliController',['$scope','$http', function($scope, $h
       });
   }
 
-  $scope.bidangs = ["IT","Agrikultur","Tata Kota"];
-  
   $scope.toggle = function(modalstate, id) {
     $scope.dataForm.$setUntouched();
     $scope.error = "";
@@ -33,6 +31,7 @@ tesaApp.controller('tenagaAhliController',['$scope','$http', function($scope, $h
               }).error(function(data){
                   alert(data.error);
               });
+              break;
         default:
             break;
     }
