@@ -45,10 +45,12 @@ class TenagaAhliController extends CI_Controller {
 		$data['id_ktp'] = $this->input->post('id_ktp');
 		$data['nama_tenaga_ahli'] = $this->input->post('nama_tenaga_ahli');
 		$data['tempat_lahir'] = $this->input->post('tempat_lahir');
-		$data['tanggal_lahir'] = $this->input->post('tanggal_lahir');
+		list($tanggal, $bulan, $tahun) = explode("/", $this->input->post('tanggal_lahir'));
+		$data['tanggal_lahir'] = $tahun.'-'.$bulan.'-'.$tanggal;
 		$data['jenis_kelamin'] = $this->input->post('jenis_kelamin');
 		$data['alamat'] = $this->input->post('alamat');
-		$data['tanggal_habis_ktp'] = $this->input->post('tanggal_habis_ktp');
+		list($tanggal, $bulan, $tahun) = explode("/", $this->input->post('tanggal_habis_ktp'));
+		$data['tanggal_habis_ktp'] = $tahun.'-'.$bulan.'-'.$tanggal;
 		$data['telp'] = $this->input->post('telp');
 		$data['email'] = $this->input->post('email');
 

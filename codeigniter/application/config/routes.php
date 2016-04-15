@@ -87,5 +87,4 @@ $route['api/perusahaan/delete/(:num)'] = 'PerusahaanController/deletePerusahaan/
 $route['api/user/get/all'] = 'UserController/getUser';
 $route['api/user/get/(:any)'] = 'UserController/getUser/$1';
 
-
 /// API DOKUMEN ///

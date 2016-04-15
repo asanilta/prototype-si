@@ -7,11 +7,15 @@ class UserController extends CI_Controller {
 	}
 	
 	public function getUser($username = null) {
-		if($username == null) 
+		if($username == null) {
 			$response['content'] = $this->User->get_all();
-		else
+		}
+		else {
 			$response['content'] = $this->User->get_by_username($username);
-
+			$response['content']['tender'] = $this->User->get_tender_by_username($username);
+			$response['content']['reminder'] = $this->User->get_reminder_by_username($username);
+		}
+		
 		if($response['content'] == null) {
 			$response['content'] = '';
 			if($username != null) {
@@ -23,10 +27,6 @@ class UserController extends CI_Controller {
 		}
 
 		$this->sendJSON($response);
-	}
-
-	public function getTender($username) {
-		
 	}
 
 	public function sendJSON($response) {
