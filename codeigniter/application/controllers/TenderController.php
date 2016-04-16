@@ -34,15 +34,15 @@ class TenderController extends CI_Controller {
 			$response['content'] = $this->Tender->get_by_id($id);
 			$j = 0;
 			
-			foreach ($this->Tender->get_bidang_by_id($response['content']['id_tender']) as $value) {
+			foreach ($this->Tender->get_bidang_by_id($id) as $value) {
 				$response['content']['bidang_tender'][$j] = $value['bidang_tender'];
 				$j++;
 			}
 			
-			$response['content']['tenaga_ahli'] = $this->getTenagaInTender($response['content']['id_tender']);
-			$response['content']['persyaratan'] = $this->Tender->get_persyaratan_by_id($response['content']['id_tender']);
+			$response['content']['tenaga_ahli'] = $this->getTenagaInTender($id);
+			$response['content']['persyaratan'] = $this->Tender->get_persyaratan_by_id($id);
 			$a = 0;
-			foreach($this->Tender->get_tim_by_id($response['content']['id_tender']) as $temp) {
+			foreach($this->Tender->get_tim_by_id($id) as $temp) {
 				$response['content']['tim'][$a] = $this->User->get_by_username($temp['username']);
 				$a++;
 			}

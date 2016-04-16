@@ -84,7 +84,8 @@ class Tender extends CI_Model{
 	}
 
 	public function get_persyaratan_by_id($id) {
-		$this->db->where('id_tender', $id);
+		$this->db->select('nama_persyaratan, kategori_persyaratan, status')
+			->where('id_tender', $id);
 		$result = $this->db->get('persyaratan_tender');
 		return $result->result_array();
 	}
