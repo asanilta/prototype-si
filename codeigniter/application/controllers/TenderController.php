@@ -20,31 +20,36 @@ class TenderController extends CI_Controller {
 				}
 				$response['content'][$i]['tenaga_ahli'] = $this->getTenagaInTender($content['id_tender']);
 				$response['content'][$i]['persyaratan'] = $this->Tender->get_persyaratan_by_id($content['id_tender']);
-				$a = 0;
+				$j = 0;
 				foreach($this->Tender->get_tim_by_id($response['content'][$i]['id_tender']) as $temp) {
-					$response['content'][$i]['tim'][$a] = $this->User->get_by_username($temp['username']);
-					$a++;
+					$response['content'][$i]['tim'][$j] = $this->User->get_by_username($temp['username']);
+					$j++;
 				}
+				$response['content'][$i]['rekomendasi_perusahaan'] = $this->Tender->get_rekomendasi_perusahaan($content['id_tender']);
+				$response['content'][$i]['rekomendasi_tenaga_ahli'] = $this->Tender->get_rekomendasi_tenaga_ahli($content['id_tender']);
+				$response['content'][$i]['rekomendasi_tender'] = $this->Tender->get_rekomendasi_tender($content['id_tender']);
 			}
 		}
 		else {
 			$response['content'] = $this->Tender->get_by_id($id);
 			$j = 0;
+			
 			foreach ($this->Tender->get_bidang_by_id($response['content']['id_tender']) as $value) {
 				$response['content']['bidang_tender'][$j] = $value['bidang_tender'];
 				$j++;
 			}
 			
 			$response['content']['tenaga_ahli'] = $this->getTenagaInTender($response['content']['id_tender']);
-			if($this->Tender->get_persyaratan_by_id($response['content']['id_tender']) != null)
-				$response['content']['persyaratan'] = $this->Tender->get_persyaratan_by_id($response['content']['id_tender']);
-			else
-				$response['content']['persyaratan'] = null;
+			$response['content']['persyaratan'] = $this->Tender->get_persyaratan_by_id($response['content']['id_tender']);
 			$a = 0;
 			foreach($this->Tender->get_tim_by_id($response['content']['id_tender']) as $temp) {
 				$response['content']['tim'][$a] = $this->User->get_by_username($temp['username']);
 				$a++;
 			}
+
+			$response['content']['rekomendasi_perusahaan'] = $this->Tender->get_rekomendasi_perusahaan($id);
+			$response['content']['rekomendasi_tenaga_ahli'] = $this->Tender->get_rekomendasi_tenaga_ahli($id);
+			$response['content']['rekomendasi_tender'] = $this->Tender->get_rekomendasi_tender($id);
 		}
 
 		if($response['content'] == null) {
@@ -62,7 +67,7 @@ class TenderController extends CI_Controller {
 	public function insertTender() {
 		$data['id_tender'] = $this->input->post('id_tender');
 		$data['nama_tender'] = $this->input->post('nama_tender');
-		$data['status'] = $this->input->post('status');
+		//$data['status'] = $this->input->post('status');
 		$data['instansi_pengada'] = $this->input->post('instansi_pengada');
 		$data['url'] = $this->input->post('url');
 		$data['tenggat_prakualifikasi'] = $this->input->post('tenggat_prakualifikasi');
@@ -70,11 +75,11 @@ class TenderController extends CI_Controller {
 		if($this->input->post('id_perusahaan') != null)
 			$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 
-		$result = $this->TenagaAhli->insert($data);
+		$result = $this->Tender->insert($data);
 		if($result)
-			$response['message'] = 'Data tenaga ahli baru berhasil disimpan';
+			$response['message'] = 'Data tender baru berhasil disimpan';
 		else
-			$response['message'] = 'Data tenaga ahli tidak berhasil disimpan';
+			$response['message'] = 'Data tender tidak berhasil disimpan';
 
 		$this->sendJSON($response);
 	}

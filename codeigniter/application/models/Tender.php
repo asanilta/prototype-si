@@ -45,8 +45,10 @@ class Tender extends CI_Model{
 	}
 
 	public function get_bidang_by_id($id) {
-		$this->db->where('id_tender', $id);
+		$this->db->select('bidang_tender')
+			->where('id_tender', $id);
 		$result = $this->db->get('bidang_tender');
+
 		return $result->result_array();
 	}
 
@@ -103,5 +105,57 @@ class Tender extends CI_Model{
 
 		$result = $this->db->get();
 		return $result->result_array();
+	}
+
+	public function get_rekomendasi_perusahaan($id_tender) {
+		$bidang = [];
+		$j = 0;
+		foreach ($this->Tender->get_bidang_by_id($id_tender) as $value) {
+			$bidang[$j] = $value['bidang_tender'];
+			$j++;
+		}
+		$this->db->flush_cache();
+
+		$this->db->select('*')
+			->from('perusahaan')
+			->join('bidang_perusahaan', 'bidang_perusahaan.id_perusahaan = perusahaan.id_perusahaan')
+			->where_in('bidang_perusahaan.bidang_perusahaan', $bidang);
+		
+		return $this->db->get()->result_array();
+	}
+
+	public function get_rekomendasi_tenaga_ahli($id_tender) {
+		$bidang = [];
+		$j = 0;
+		foreach ($this->Tender->get_bidang_by_id($id_tender) as $value) {
+			$bidang[$j] = $value['bidang_tender'];
+			$j++;
+		}
+		$this->db->flush_cache();
+		
+		$this->db->select('*')
+			->from('tenaga_ahli')
+			->join('bidang_tenaga_ahli', 'bidang_tenaga_ahli.id_ktp = tenaga_ahli.id_ktp')
+			->where_in('bidang_tenaga_ahli.bidang_keahlian', $bidang);
+		
+		return $this->db->get()->result_array();
+	}
+
+	public function get_rekomendasi_tender($id_tender) {
+		$bidang = [];
+		$j = 0;
+		foreach ($this->Tender->get_bidang_by_id($id_tender) as $value) {
+			$bidang[$j] = $value['bidang_tender'];
+			$j++;
+		}
+		$this->db->flush_cache();
+		
+		$this->db->select('*')
+			->from('tender')
+			->join('bidang_tender', 'bidang_tender.id_tender = tender.id_tender')
+			->where_in('bidang_tender.bidang_tender', $bidang)
+			->where_not_in('tender.id_tender',array($id_tender));
+		
+		return $this->db->get()->result_array();
 	}
 }
