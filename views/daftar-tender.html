@@ -36,7 +36,7 @@
                               <td>{{tender.instansi_pengada}}</td>
                               <td>{{tender.tenggat_prakualifikasi}}</td>
                               <td>{{tender.tenggat_akhir}}</td>
-                              <td><span ng-repeat="tim in tender.tim">{{tim.nama_lengkap}}<span ng-show="!$last">, </span></span></td>
+                              <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
                               <td><span ng-repeat="bidang in tender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></td>
                           </tr>
                       </tbody>
