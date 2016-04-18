@@ -8,8 +8,8 @@ class Tender extends CI_Model{
 	public function get_all() {
 		$result = $this->db->get('tender')->result_array();
 		foreach($result as &$tender) {
-			$tender['tenggat_prakualifikasi'] = date("d M Y", strtotime($tender['tenggat_prakualifikasi']));
-			$tender['tenggat_akhir'] = date("d M Y", strtotime($tender['tenggat_akhir']));
+			$tender['tenggat_prakualifikasi'] = date("d/m/Y", strtotime($tender['tenggat_prakualifikasi']));
+			$tender['tenggat_akhir'] = date("d/m/Y", strtotime($tender['tenggat_akhir']));
 		}
 		return $result;
 	}
@@ -17,8 +17,8 @@ class Tender extends CI_Model{
 	public function get_by_id($id) {
 		$this->db->where('id_tender', $id);
 		$result = $this->db->get('tender')->row_array();
-		$result['tenggat_prakualifikasi'] = date("d M Y", strtotime($result['tenggat_prakualifikasi']));
-		$result['tenggat_akhir'] = date("d M Y", strtotime($result['tenggat_akhir']));
+		$result['tenggat_prakualifikasi'] = date("d/m/Y", strtotime($result['tenggat_prakualifikasi']));
+		$result['tenggat_akhir'] = date("d/m/Y", strtotime($result['tenggat_akhir']));
 
 		return $result;
 	}
@@ -171,12 +171,27 @@ class Tender extends CI_Model{
 		return $this->db->get()->result_array();
 	}
 
-	public function insert_bidang_by_id($id) {
+	public function insert_bidang_by_id($id, $bidang) {
 		$this->db->where('id_tender', $id);
 		$result = $this->db->delete('bidang_tender');
 		$data['id_tender'] = $id;
+		if($bidang == null) return true;
 		foreach($bidang as $b) {
 			$data['bidang_tender'] = $b;
+			$result = $this->db->insert('bidang_tender', $data);
+			if(!$result)
+				return false;
+		}
+		return true;
+	}
+
+	public function insert_tim_by_id($id, $username) {
+		$this->db->where('id_tender', $id);
+		$result = $this->db->delete('tim');
+		$data['id_tender'] = $id;
+		if($username == null) return true;
+		foreach($username as $u) {
+			$data['username'] = $u;
 			$result = $this->db->insert('bidang_tender', $data);
 			if(!$result)
 				return false;

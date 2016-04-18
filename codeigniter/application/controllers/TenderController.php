@@ -76,13 +76,16 @@ class TenderController extends CI_Controller {
 
 		$result = $this->Tender->insert($data);
 		if($result > 0) {
-			$result = $this->Tender->insert_bidang_by_id($result, $this->input->post('bidang_tender'));
-			if($result) $response['message'] = 'Data tender baru berhasil disimpan';
+			$result_bidang = $this->Tender->insert_bidang_by_id($result, $this->input->post('bidang_tender'));
+			$result_tim = $this->Tender->insert_tim_by_id($result, $this->input->post('username'));
+
+			if($result_bidang && $result_tim) $response['message'] = 'Data tender baru berhasil disimpan';
 			else $response['message'] = 'Data tender tidak berhasil disimpan';
 		}
 		else {
 			$response['message'] = 'Data tender tidak berhasil disimpan';
 		}
+
 		$this->sendJSON($response);
 	}
 

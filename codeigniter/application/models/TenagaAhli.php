@@ -67,6 +67,8 @@ class TenagaAhli extends CI_Model{
 		$this->db->where('id_ktp', $id);
 		$result = $this->db->delete('bidang_tenaga_ahli');
 		$data['id_ktp'] = $id;
+		if($bidang == null)
+			return true;
 		foreach($bidang as $b) {
 			$data['bidang_keahlian'] = $b;
 			$result = $this->db->insert('bidang_tenaga_ahli', $data);

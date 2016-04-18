@@ -59,6 +59,8 @@ class Perusahaan extends CI_Model{
 		$this->db->where('id_perusahaan', $id);
 		$result = $this->db->delete('bidang_perusahaan');
 		$data['id_perusahaan'] = $id;
+		if($bidang == null)
+			return true;
 		foreach($bidang as $b) {
 			$data['bidang_perusahaan'] = $b;
 			$result = $this->db->insert('bidang_perusahaan', $data);
