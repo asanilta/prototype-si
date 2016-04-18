@@ -22,9 +22,13 @@ class User extends CI_Model{
 			->join('tender','tim.id_tender=tender.id_tender')
 			->where('username', $username);
 		
-		$result = $this->db->get();
+		$result = $this->db->get()->result_array();
+		foreach($result as &$tender) {
+			$tender['tenggat_prakualifikasi'] = date("d-m-Y", strtotime($tender['tenggat_prakualifikasi']));
+			$tender['tenggat_akhir'] = date("d-m-Y", strtotime($tender['tenggat_akhir']));
+		}
 
-		return $result->result_array();
+		return $result;
 	}
 
 	public function get_reminder_by_username($username) {

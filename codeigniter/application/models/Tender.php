@@ -6,24 +6,35 @@ class Tender extends CI_Model{
 	}
 
 	public function get_all() {
-		$result = $this->db->get('tender');
-		return $result->result_array();
+		$result = $this->db->get('tender')->result_array();
+		foreach($result as &$tender) {
+			$tender['tenggat_prakualifikasi'] = date("d M Y", strtotime($tender['tenggat_prakualifikasi']));
+			$tender['tenggat_akhir'] = date("d M Y", strtotime($tender['tenggat_akhir']));
+		}
+		return $result;
 	}
 
 	public function get_by_id($id) {
 		$this->db->where('id_tender', $id);
-		$result = $this->db->get('tender');
+		$result = $this->db->get('tender')->row_array();
+		$result['tenggat_prakualifikasi'] = date("d M Y", strtotime($result['tenggat_prakualifikasi']));
+		$result['tenggat_akhir'] = date("d M Y", strtotime($result['tenggat_akhir']));
 
-		return $result->row_array();
+		return $result;
 	}
 
 	public function insert($data) {
 		$result = $this->db->insert('tender', $data);
 
-		if($result)
-			return true;
-		else
-			return false;
+		if($result) {
+			$this->db->flush_cache();
+			$this->db->select('id_tender')
+				->from('tender')
+				->where('nama_tender',$data['nama_tender']);
+			$id = $this->db->get()->row_array();
+			return $id['id_tender'];
+		}
+		else return 0;
 	}
 
 	public function delete($id)
@@ -158,5 +169,18 @@ class Tender extends CI_Model{
 			->where_not_in('tender.id_tender',array($id_tender));
 		
 		return $this->db->get()->result_array();
+	}
+
+	public function insert_bidang_by_id($id) {
+		$this->db->where('id_tender', $id);
+		$result = $this->db->delete('bidang_tender');
+		$data['id_tender'] = $id;
+		foreach($bidang as $b) {
+			$data['bidang_tender'] = $b;
+			$result = $this->db->insert('bidang_tender', $data);
+			if(!$result)
+				return false;
+		}
+		return true;
 	}
 }

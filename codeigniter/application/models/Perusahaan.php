@@ -20,10 +20,15 @@ class Perusahaan extends CI_Model{
 	public function insert($data) {
 		$result = $this->db->insert('perusahaan', $data);
 
-		if($result)
-			return true;
-		else
-			return false;
+		if($result) {
+			$this->db->flush_cache();
+			$this->db->select('id_perusahaan')
+				->from('perusahaan')
+				->where('nama_perusahaan',$data['nama_perusahaan']);
+			$id = $this->db->get()->row_array();
+			return $id['id_perusahaan'];
+		}
+		else return 0;
 	}
 
 	public function delete($id)
@@ -48,5 +53,18 @@ class Perusahaan extends CI_Model{
 		$this->db->where('id_perusahaan', $id);
 		$result = $this->db->get('bidang_perusahaan');
 		return $result->result_array();
+	}
+
+	public function insert_bidang_by_id($id, $bidang) {
+		$this->db->where('id_perusahaan', $id);
+		$result = $this->db->delete('bidang_perusahaan');
+		$data['id_perusahaan'] = $id;
+		foreach($bidang as $b) {
+			$data['bidang_perusahaan'] = $b;
+			$result = $this->db->insert('bidang_perusahaan', $data);
+			if(!$result)
+				return false;
+		}
+		return true;
 	}
 }

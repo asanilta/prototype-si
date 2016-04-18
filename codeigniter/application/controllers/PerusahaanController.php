@@ -46,17 +46,21 @@ class PerusahaanController extends CI_Controller {
 	}
 
 	public function insertPerusahaan() {
-		$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 		$data['nama_perusahaan'] = $this->input->post('nama_perusahaan');
 		$data['alamat'] = $this->input->post('alamat');
 		$data['telp'] = $this->input->post('telp');
 		$data['email'] = $this->input->post('email');
 
 		$result = $this->Perusahaan->insert($data);
-		if($result)
-			$response['message'] = 'Data perusahaan baru berhasil disimpan';
-		else
+
+		if($result > 0) {
+			$result = $this->Perusahaan->insert_bidang_by_id($result, $this->input->post('bidang_perusahaan'));
+			if($result) $response['message'] = 'Data perusahaan baru berhasil disimpan';
+			else $response['message'] = 'Data perusahaan tidak berhasil disimpan';
+		}
+		else {
 			$response['message'] = 'Data perusahaan tidak berhasil disimpan';
+		}
 
 		$this->sendJSON($response);
 	}
@@ -81,8 +85,10 @@ class PerusahaanController extends CI_Controller {
 
 		$result = $this->Perusahaan->update($data);
 
-		if($result)
-			$response['message'] = 'Data perusahaan berhasil diubah';
+		if($result) {
+			$result = $this->Perusahaan->insert_bidang_by_id($data['id_perusahaan'], $this->input->post('bidang_perusahaan'));
+			if($result) $response['message'] = 'Data perusahaan berhasil diubah';
+		}
 		else
 			$response['message'] = 'Data perusahaan tidak berhasil diubah';
 

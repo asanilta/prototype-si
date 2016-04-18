@@ -65,9 +65,8 @@ class TenderController extends CI_Controller {
 	}
 
 	public function insertTender() {
-		$data['id_tender'] = $this->input->post('id_tender');
 		$data['nama_tender'] = $this->input->post('nama_tender');
-		//$data['status'] = $this->input->post('status');
+		$data['status'] = 'todo';
 		$data['instansi_pengada'] = $this->input->post('instansi_pengada');
 		$data['url'] = $this->input->post('url');
 		$data['tenggat_prakualifikasi'] = $this->input->post('tenggat_prakualifikasi');
@@ -76,11 +75,14 @@ class TenderController extends CI_Controller {
 			$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 
 		$result = $this->Tender->insert($data);
-		if($result)
-			$response['message'] = 'Data tender baru berhasil disimpan';
-		else
+		if($result > 0) {
+			$result = $this->Tender->insert_bidang_by_id($result, $this->input->post('bidang_tender'));
+			if($result) $response['message'] = 'Data tender baru berhasil disimpan';
+			else $response['message'] = 'Data tender tidak berhasil disimpan';
+		}
+		else {
 			$response['message'] = 'Data tender tidak berhasil disimpan';
-
+		}
 		$this->sendJSON($response);
 	}
 
