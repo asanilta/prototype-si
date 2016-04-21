@@ -102,7 +102,7 @@ class Tender extends CI_Model{
 	}
 
 	public function get_tim_by_id($id) {
-		$this->db->select('tim.username, user.nama_lengkap')
+		$this->db->select('*')
 			->from('tim')
 			->join('user','user.username = tim.username')
 			->where('id_tender',$id);
@@ -126,14 +126,19 @@ class Tender extends CI_Model{
 			$bidang[$j] = $value['bidang_tender'];
 			$j++;
 		}
-		$this->db->flush_cache();
+		if($bidang == []) {
+			return [];
+		}
+		else {
+			$this->db->flush_cache();
 
-		$this->db->select('*')
-			->from('perusahaan')
-			->join('bidang_perusahaan', 'bidang_perusahaan.id_perusahaan = perusahaan.id_perusahaan')
-			->where_in('bidang_perusahaan.bidang_perusahaan', $bidang);
-		
-		return $this->db->get()->result_array();
+			$this->db->select('*')
+				->from('perusahaan')
+				->join('bidang_perusahaan', 'bidang_perusahaan.id_perusahaan = perusahaan.id_perusahaan')
+				->where_in('bidang_perusahaan.bidang_perusahaan', $bidang);
+			
+			return $this->db->get()->result_array();
+		}
 	}
 
 	public function get_rekomendasi_tenaga_ahli($id_tender) {
@@ -143,14 +148,19 @@ class Tender extends CI_Model{
 			$bidang[$j] = $value['bidang_tender'];
 			$j++;
 		}
-		$this->db->flush_cache();
-		
-		$this->db->select('*')
-			->from('tenaga_ahli')
-			->join('bidang_tenaga_ahli', 'bidang_tenaga_ahli.id_ktp = tenaga_ahli.id_ktp')
-			->where_in('bidang_tenaga_ahli.bidang_keahlian', $bidang);
-		
-		return $this->db->get()->result_array();
+		if($bidang == []) {
+			return [];
+		}
+		else {
+			$this->db->flush_cache();
+			
+			$this->db->select('*')
+				->from('tenaga_ahli')
+				->join('bidang_tenaga_ahli', 'bidang_tenaga_ahli.id_ktp = tenaga_ahli.id_ktp')
+				->where_in('bidang_tenaga_ahli.bidang_keahlian', $bidang);
+			
+			return $this->db->get()->result_array();
+		}
 	}
 
 	public function get_rekomendasi_tender($id_tender) {
@@ -160,15 +170,20 @@ class Tender extends CI_Model{
 			$bidang[$j] = $value['bidang_tender'];
 			$j++;
 		}
-		$this->db->flush_cache();
-		
-		$this->db->select('*')
-			->from('tender')
-			->join('bidang_tender', 'bidang_tender.id_tender = tender.id_tender')
-			->where_in('bidang_tender.bidang_tender', $bidang)
-			->where_not_in('tender.id_tender',array($id_tender));
-		
-		return $this->db->get()->result_array();
+		if($bidang == []) {
+			return [];
+		}
+		else {
+			$this->db->flush_cache();
+			
+			$this->db->select('*')
+				->from('tender')
+				->join('bidang_tender', 'bidang_tender.id_tender = tender.id_tender')
+				->where_in('bidang_tender.bidang_tender', $bidang)
+				->where_not_in('tender.id_tender',array($id_tender));
+			
+			return $this->db->get()->result_array();
+		}
 	}
 
 	public function insert_bidang_by_id($id, $bidang) {

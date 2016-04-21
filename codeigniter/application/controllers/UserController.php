@@ -17,13 +17,15 @@ class UserController extends CI_Controller {
 			$response['content']['tender'] = $this->User->get_tender_by_username($username);
 
 			foreach ($response['content']['tender'] as &$tender) {
-				$temp = $this->Tender->get_tim_by_id($tender['id_tender']);
+				$tender['tim'] = $temp = $this->Tender->get_tim_by_id($tender['id_tender']);
+				/*
 				$j = 0;
 				foreach($temp as $temp2) {
 					$name = $this->User->get_by_username($temp2['username']);
 					$tender['tim'][$j] = $name['nama_lengkap'];
 					$j++;
 				}
+				*/
 				
 				$j = 0;
 				$temp = $this->Tender->get_bidang_by_id($tender['id_tender']);
