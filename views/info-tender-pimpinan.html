@@ -1,0 +1,125 @@
+<div class="bg-light lter b-b wrapper-md padder-md">
+  <h1 class="m-n font-bold h3 text-grey padder">Info Tender</h1>
+  <h4 class="m-n h4 text-grey padder">{{selectedTender.nama_tender}}</h4>
+</div>
+
+<div class="wrapper-lg bg-light">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <span ng-if="selectedTender==null"><button class="btn btn-primary" data-toggle="modal" data-target="#pilih-tender">Pilih Tender</button></span>
+          <div id="info-tender" ng-if="selectedTender!=null">
+          <ul>
+            <li><b>Nama Tender</b>: {{selectedTender.nama_tender}}</li>
+            <li><b>Instansi Pengada</b>: {{selectedTender.instansi_pengada}}</li>
+            <li><b>URL</b>: <a href="{{selectedTender.url}}" target="blank_">{{selectedTender.url}}</a></li>
+            <li><b>Status</b>: {{selectedTender.status}}</li>
+            <li><b>Tenggat Waktu Prakualifikasi</b>: {{selectedTender.tenggat_prakualifikasi}}</li>
+            <li><b>Tenggat Waktu Akhir</b>: {{selectedTender.tenggat_akhir}}</li>
+            <li><b>Tim</b>: <span ng-repeat="tim in selectedTender.tim">{{tim.nama_lengkap}}<span ng-show="!$last">, </span></span></li>
+            <li><b>Bidang</b>: <span ng-repeat="bidang in selectedTender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></li>
+          </ul>
+          <hr>
+          <span class="m-n h4 text-grey padder">Perusahaan Mitra</span>
+          <div class="m-n padder" ng-if="selectedTender.perusahaan==null">Tidak ada perusahaan mitra yang dipilih untuk tender ini</div>
+          <table class="table m-t-md"  ng-if="selectedTender.perusahaan!=null">
+              <thead>
+                  <tr>
+                      <th>Nama</th>
+                      <th>Alamat</th>
+                      <th>No. Telepon</th>
+                      <th>Email</th>
+                      <th>Bidang</th>
+                      <th>Aksi</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>{{selectedTender.perusahaan.nama_perusahaan}}</td>
+                      <td>{{selectedTender.perusahaan.alamat}}</td>
+                      <td>{{selectedTender.perusahaan.telp}}</td>
+                      <td>{{selectedTender.perusahaan.email}}</td>
+                      <td><span ng-repeat="bidang in selectedTender.perusahaan.bidang_perusahaan">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                      <td>
+                          <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <hr>
+          <span class="m-n h4 text-grey padder">Tenaga Ahli</span>
+          <div class="m-n padder" ng-if="selectedTender.tenaga_ahli==null">Tidak ada tenaga ahli yang dipilih untuk tender ini</div>
+          <table class="table m-t-md" ng-if="selectedTender.tenaga_ahli!=null">
+                <thead>
+                    <tr>
+                        <th>Detail</th>
+                        <th>Nama</th>
+                        <th>L/P</th>
+                        <th>No. Telepon</th>
+                        <th>Bidang Keahlian</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat-start="ta in selectedTender.tenaga_ahli | orderBy: 'nama_tenaga_ahli'">
+                        <td>
+                          <a ng-if="ta.expanded" ng-click="ta.expanded = false" class="text15"  data-toggle="tooltip" title="Tutup Detail" data-placement="bottom"><i class="fa fa-chevron-circle-down"></i></a>
+                          <a ng-if="!ta.expanded" ng-click="ta.expanded = true" class="text15"  data-toggle="tooltip" title="Lihat Detail" data-placement="bottom"><i class="fa fa-chevron-circle-right"></i></a>
+                        </td>
+                        <td>{{ta.nama_tenaga_ahli}}</td>
+                        <td>{{ta.jenis_kelamin}}</td>
+                        <td>{{ta.telp}}</td>
+                        <td><span ng-repeat="bidang in ta.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                        <td>
+                          <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end ng-if="ta.expanded">
+                      <td></td>
+                      <td colspan="5">
+                          <span class="font-bold">ID KTP: </span> {{ta.id_ktp}}<br/>
+                          <span class="font-bold">Tempat Tanggal Lahir: </span> {{ta.tempat_lahir}}, {{ta.tanggal_lahir}}<br/>
+                          <span class="font-bold">Alamat: </span> {{ta.alamat}}<br/>
+                          <span class="font-bold">Email: </span> {{ta.email}}<br/>
+                          <span class="font-bold">Tanggal KTP Habis Berlaku: </span> {{ta.tanggal_habis_ktp}}<br/>
+                          <span class="font-bold">Tanggal Data Terakhir Diperbarui: </span> {{ta.updated_at}}<br/>
+                      </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+            <span class="m-n h4 text-grey padder">Tender Proyek Relevan</span>
+            <div class="m-n padder" ng-if="selectedTender.rekomendasi.tender==null">Tidak ada tender proyek yang relevan dengan tender ini</div>
+            <table class="table m-t-md" ng-if="selectedTender.rekomendasi.tender!=null">
+                  <thead>
+                      <tr>
+                          <th>Nama</th>
+                          <th>Instansi Pengada</th>
+                          <th>Tim</th>
+                          <th>Bidang</th>
+                          <th>Aksi</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr ng-repeat="tender in selectedTender.rekomendasi.tender">
+                          <td>{{tender.nama_tender}}</td>
+                          <td>{{tender.instansi_pengada}}</td>
+                          <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
+                          <td><span ng-repeat="bidang in tender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                          <td>
+                            <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

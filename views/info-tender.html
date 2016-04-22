@@ -10,7 +10,7 @@
         <div class="panel-body">
           <span ng-if="selectedTender==null"><button class="btn btn-primary" data-toggle="modal" data-target="#pilih-tender">Pilih Tender</button></span>
           <div id="info-tender" ng-if="selectedTender!=null">
-          <button class="btn pull-right" ng-click="toggle('edit')"><i class="fa fa-edit"></i> Ubah Data</button>
+          <button ng-if="user.role=='staf'" class="btn pull-right" ng-click="toggle('edit')"><i class="fa fa-edit"></i> Ubah Data</button>
           <ul>
             <li><b>Nama Tender</b>: {{selectedTender.nama_tender}}</li>
             <li><b>Instansi Pengada</b>: {{selectedTender.instansi_pengada}}</li>
@@ -21,12 +21,12 @@
             <li><b>Tim</b>: <span ng-repeat="tim in selectedTender.tim">{{tim.nama_lengkap}}<span ng-show="!$last">, </span></span></li>
             <li><b>Bidang</b>: <span ng-repeat="bidang in selectedTender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></li>
           </ul>
-          <p style="text-align:right" class="m-lg">
+          <p ng-if="user.role=='staf'" style="text-align:right" class="m-lg">
             <a class="text12" style="color:tomato; position: relative;" ng-click="confirmDelete(selectedTender.id_tender)"><i class="fa fa-times"></i> Batalkan Tender</a>
           </p>
           <hr>
-          <span class="m-n h4 text-grey padder">Perusahaan Mitra</span> <button class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiPerusahaanModal">Lihat Rekomendasi</button>
-          <div class="m-n padder" ng-if="selectedTender.perusahaan==null">Anda belum memilih perusahaan mitra untuk tender ini</div>
+          <span class="m-n h4 text-grey padder">Perusahaan Mitra</span> <button ng-if="user.role=='staf'" class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiPerusahaanModal">Lihat Rekomendasi</button>
+          <div class="m-n padder" ng-if="selectedTender.perusahaan==null">Tidak ada perusahaan mitra yang telah dipilih untuk tender ini</div>
           <table class="table m-t-md"  ng-if="selectedTender.perusahaan!=null">
               <thead>
                   <tr>
@@ -54,8 +54,8 @@
           </table>
 
           <hr>
-          <span class="m-n h4 text-grey padder">Tenaga Ahli</span> <button class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiTenagaAhliModal">Lihat Rekomendasi</button>
-          <div class="m-n padder" ng-if="selectedTender.tenaga_ahli==null">Anda belum memilih tenaga ahli untuk tender ini</div>
+          <span class="m-n h4 text-grey padder">Tenaga Ahli</span> <button ng-if="user.role=='staf'" class="btn-sm btn" data-toggle="modal" data-target="#rekomendasiTenagaAhliModal">Lihat Rekomendasi</button>
+          <div class="m-n padder" ng-if="selectedTender.tenaga_ahli==null">Tidak ada tenaga ahli yang telah dipilih untuk tender ini</div>
           <table class="table m-t-md" ng-if="selectedTender.tenaga_ahli!=null">
                 <thead>
                     <tr>

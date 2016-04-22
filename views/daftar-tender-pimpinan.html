@@ -1,0 +1,53 @@
+<div class="bg-light lter b-b wrapper-md padder-md">
+  <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Daftar Tender Proyek yang Sedang Diikuti</h1>
+</div>
+        <div class="wrapper-lg bg-light">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <div class="col-sm-4">
+                    <div class="input-group">
+                      <input type="text" class="input-sm form-control" placeholder="Cari..." ng-model="query">
+                      <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button"><i class="fa fa-search"></i></button>
+                      </span>
+                    </div>
+                  </div>
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Nama Tender</th>
+                              <th>Instansi Pengada</th>
+                              <th>Tenggat Waktu Prakualifikasi</th>
+                              <th>Tenggat Waktu Akhir</th>
+                              <th>Tim</th>
+                              <th>Bidang</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr ng-repeat="tender in tenders | orderBy: 'nama_tender' | filter:query">
+                              <td>{{tender.nama_tender}} <a href="{{tender.url}}" target="blank_"><i class="fa fa-external-link"></i></a></td>
+                              <td>{{tender.instansi_pengada}}</td>
+                              <td>{{tender.tenggat_prakualifikasi}}</td>
+                              <td>{{tender.tenggat_akhir}}</td>
+                              <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
+                              <td><span ng-repeat="bidang in tender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              <!-- End of Table-to-load-the-data Part -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- /content -->
