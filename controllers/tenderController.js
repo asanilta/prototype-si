@@ -32,6 +32,7 @@ tesaApp.controller('tenderController',['$scope','$http', '$window','$cookies', f
       }
       $window.location.href = "#tender";
       $cookies.putObject("user",$scope.user);
+      $cookies.putObject("selectedTender",null);
     });
   }
 
@@ -55,6 +56,7 @@ tesaApp.controller('tenderController',['$scope','$http', '$window','$cookies', f
             alert("Error");
         });
       $('#pilih-tender').modal('hide');
+      $window.location.href = "#info-tender";
     }
 
     $scope.bidangs = ["IT","Agrikultur","Tata Kota"];

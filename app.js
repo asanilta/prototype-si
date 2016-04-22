@@ -22,7 +22,8 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
              controller : 'tenagaAhliController'
            })
            .when('/dokumen', {
-             templateUrl: 'views/dokumen.html'
+             templateUrl: 'views/dokumen.html',
+             controller : 'dokumenController'
            })
            .when('/perusahaan-mitra', {
              templateUrl: 'views/perusahaan-mitra.html',
