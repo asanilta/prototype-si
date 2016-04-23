@@ -4,36 +4,51 @@ class DokumenController extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->helper(array('form','url'));
+		$this->load->helper(array('form','url','file','directory'));
+		$this->load->model('Dokumen');
 	}
 
-	function index()
-	{
-		$this->load->view('upload_form', array('error' => ' ' ));
-	}
-
-	function do_upload()
-	{
+	function do_upload()  {
 		$config['upload_path'] = './dokumen/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '5000';
-		$config['max_width']  = '5000';
-		$config['max_height']  = '5000';
+		$config['allowed_types'] = '*';
+		$config['remove_spaces'] = 'TRUE';
 
 		$this->load->library('upload', $config);
 
-		if ( ! $this->upload->do_upload())
-		{
+		if (!$this->upload->do_upload()) {
 			$error = array('error' => $this->upload->display_errors());
-
-			$this->load->view('upload_form', $error);
+			$response['message'] = 'Dokumen tidak berhasil diunggah';
 		}
-		else
-		{
+		else {
 			$data = array('upload_data' => $this->upload->data());
-
-			$this->load->view('upload_success', $data);
+			$response['content'] = $data;
+			$response['message'] = 'Dokumen berhasil diunggah';
 		}
+	}
+
+	public function getDokumen($letak_dokumen == null) {
+		if($letak_dokumen == null) {
+			$response['content'] = $this->Dokumen->get_all();
+		}
+		else {
+			$response['content'] = $this->Dokumen->get_by_letak($letak_dokumen);
+		}
+		$this->sendJSON($response);
+	}
+
+	public function createFolder($folder) {
+		if(!is_dir('./dokumen/'.$folder)) {
+			mkdir('./dokumen/'.$folder,0755,TRUE);
+	    } 
+	}
+
+	public function sendJSON($response) {
+		$this->output
+			->set_status_header(200)
+			->set_content_type('application/json', 'utf-8')
+			->set_output(json_encode($response, JSON_PRETTY_PRINT))
+			->_display();
+			exit;
 	}
 }
 ?>

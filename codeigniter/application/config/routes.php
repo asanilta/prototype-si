@@ -89,3 +89,7 @@ $route['api/user/get/all'] = 'UserController/getUser';
 $route['api/user/get/(:any)'] = 'UserController/getUser/$1';
 
 /// API DOKUMEN ///
+$route['api/dokumen/get/all'] = 'DokumenController/getDokumen';
+$route['api/dokumen/get/(:any)'] = 'DokumenController/getDokumen/$1';
+$route['api/dokumen/upload']['POST'] = 'DokumenController/do_upload';
+$route['api/folder/insert/(:any)'] = 'DokumenController/createFolder/$1';
