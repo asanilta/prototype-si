@@ -69,7 +69,7 @@ class DokumenController extends CI_Controller {
 		if(!is_dir('./dokumen/'.$folder)) {
 			mkdir('./dokumen/'.$folder,0755,TRUE);
 			$db['nama_dokumen'] = $this->input->post('nama_dokumen');
-			$db['letak_dokumen'] = $folder;
+			$db['letak_dokumen'] = './dokumen/'.$folder;
 			$db['jenis_dokumen'] = 'folder';
 			$db['username'] = $this->input->post('username');
 
@@ -80,6 +80,7 @@ class DokumenController extends CI_Controller {
 	    else {
 	    	$response['message'] = 'Folder telah ada pada direktori';
 	    }
+	    $this->sendJSON($response);
 	}
 
 	public function sendJSON($response) {

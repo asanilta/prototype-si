@@ -65,8 +65,12 @@ class TenderController extends CI_Controller {
 		$data['status'] = 'todo';
 		$data['instansi_pengada'] = $this->input->post('instansi_pengada');
 		$data['url'] = $this->input->post('url');
-		$data['tenggat_prakualifikasi'] = $this->input->post('tenggat_prakualifikasi');
-		$data['tenggat_akhir'] = $this->input->post('tenggat_akhir');
+		list($tanggal, $bulan, $tahun) = explode("/", $this->input->post('tenggat_prakualifikasi'));
+		if($tanggal != null && $bulan != null && $tahun != null)
+			$data['tenggat_prakualifikasi'] = $tahun.'-'.$bulan.'-'.$tanggal;
+		list($tanggal, $bulan, $tahun) = explode("/", $this->input->post('tenggat_akhir'));
+		if($tanggal != null && $bulan != null && $tahun != null)
+			$data['tenggat_akhir'] = $tahun.'-'.$bulan.'-'.$tanggal;
 		if($this->input->post('id_perusahaan') != null)
 			$data['id_perusahaan'] = $this->input->post('id_perusahaan');
 
