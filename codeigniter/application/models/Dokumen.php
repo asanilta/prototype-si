@@ -31,10 +31,8 @@ class Dokumen extends CI_Model{
 		return $result->result_array();
 	}
 
-	public function insert_dokumen($data, $jenis) {
-		if(strcmp($jenis,'tenaga_ahli')==0) {
-			$this->db->insert('dokumen_tenaga_ahli',$data);
-		}
+	public function insert_dokumen($data) {
+		return $this->db->insert('dokumen',$data);
 	}
 
 }
