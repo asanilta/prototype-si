@@ -50,11 +50,15 @@ class DokumenController extends CI_Controller {
 	}
 
 	public function getDokumen($letak_dokumen = null) {
+		$path = './dokumen/';
 		if($letak_dokumen == null) {
+			$response['content'] = $this->Dokumen->get_by_letak($path);
+		}
+		else if(strcmp($letak_dokumen,'all')==0) {
 			$response['content'] = $this->Dokumen->get_all();
 		}
 		else {
-			$response['content'] = $this->Dokumen->get_by_letak($letak_dokumen);
+			$response['content'] = $this->Dokumen->get_by_letak($path.$letak_dokumen);
 		}
 		$this->sendJSON($response);
 	}

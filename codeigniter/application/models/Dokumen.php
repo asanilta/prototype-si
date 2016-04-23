@@ -25,7 +25,7 @@ class Dokumen extends CI_Model{
 	}
 
 	public function get_by_letak($letak) {
-		$this->db->like('letak_dokumen', $letak, 'after');
+		$this->db->where('letak_dokumen', $letak);
 		$result = $this->db->get('dokumen');
 
 		return $result->result_array();
