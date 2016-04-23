@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 19, 2016 at 12:17 
+-- Generation Time: Apr 23, 2016 at 06:38 
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.4
 
@@ -95,7 +95,8 @@ INSERT INTO `bidang_tender` (`id_tender`, `bidang_tender`) VALUES
 (2, 'Konsultansi'),
 (3, 'Konstruksi'),
 (4, 'Konstruksi'),
-(5, 'Konsultansi');
+(5, 'Konsultansi'),
+(6, 'Konsultansi');
 
 -- --------------------------------------------------------
 
@@ -113,6 +114,13 @@ CREATE TABLE `dokumen` (
   `jenis_dokumen` varchar(16) NOT NULL,
   `username` varchar(16) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dokumen`
+--
+
+INSERT INTO `dokumen` (`id_dokumen`, `nama_dokumen`, `letak_dokumen`, `tanggal_buat`, `tanggal_ubah`, `jenis_dokumen`, `username`) VALUES
+(1, 'Business plan', './dokumen/bp_2015.docx', '2016-04-22 00:00:00', '2016-04-30 00:00:00', '', 'asanilta');
 
 -- --------------------------------------------------------
 
@@ -137,12 +145,19 @@ CREATE TABLE `dokumen_tenaga_ahli` (
   `id_dokumen` int(11) NOT NULL,
   `nama_dokumen` varchar(36) NOT NULL,
   `letak_dokumen` text NOT NULL,
-  `tanggal_buat` datetime NOT NULL,
-  `tanggal_ubah` datetime NOT NULL,
+  `tanggal_buat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tanggal_ubah` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `jenis_dokumen` varchar(16) NOT NULL,
   `username` varchar(16) NOT NULL,
   `id_ktp` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dokumen_tenaga_ahli`
+--
+
+INSERT INTO `dokumen_tenaga_ahli` (`id_dokumen`, `nama_dokumen`, `letak_dokumen`, `tanggal_buat`, `tanggal_ubah`, `jenis_dokumen`, `username`, `id_ktp`) VALUES
+(1, 'KTP', './dokumen/ktp.pdf', '2016-04-22 00:00:00', '0000-00-00 00:00:00', '', 'asanilta', 13513035);
 
 -- --------------------------------------------------------
 
@@ -290,7 +305,10 @@ INSERT INTO `tender` (`id_tender`, `nama_tender`, `status`, `instansi_pengada`, 
 (2, 'Belanja Jasa Konsultasi DED Penataan Lingkungan Kawasan Taman Budaya', 'todo', 'DINAS PARIWISATA DAN KEBUDAYAAN PROVINSI JAWA BARAT', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29893014', '2016-04-28', '2016-04-18', NULL),
 (3, 'Pembangunan masjid Jawa Barat di Plumbon Kabupaten Cirebon (Tahap II)', 'todo', 'DINAS PERMUKIMAN DAN PERUMAHAN PROVINSI JAWA BARAT', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29888014', '2016-05-27', '2016-08-12', NULL),
 (4, 'PEMBANGUNAN GEDUNG KANTOR TAHAP 1', 'todo', 'DINAS PENDAPATAN DAERAH PROVINSI JAWA BARAT', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29902014', '2016-04-20', '2016-04-30', NULL),
-(5, 'Kajian Analisis Pemetaan Industri Manufaktur di Jawa Barat', 'todo', 'DINAS PERINDUSTRIAN DAN PERDAGANGAN PROVINSI JAWA BARAT', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29899014', '2016-05-28', '2016-06-30', NULL);
+(5, 'Kajian Analisis Pemetaan Industri Manufaktur di Jawa Barat', 'todo', 'DINAS PERINDUSTRIAN DAN PERDAGANGAN PROVINSI JAWA BARAT', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29899014', '2016-05-28', '2016-06-30', NULL),
+(6, 'Perencanaan Teknis Peningkatan Jaringan Irigasi Curug Dengdeng di Kab. Cianjur', 'todo', 'Perencanaan Teknis Peningkatan Jaringan Irigasi Curug Dengdeng di Kab. Cianjur', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29918014', '2016-04-30', '2016-05-28', 6),
+(7, 'JASA KONSULTANSI PENYUSUNAN RANCANGAN TEKNIS TERINCI (RTT) SISI UDARA BANDAR UDARA NUSAWIRU', 'todo', 'DINAS PERHUBUNGAN PROVINSI JAWA BARAT', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29912014', '2016-05-21', '2016-07-31', NULL),
+(8, 'Pengembangan Sistem Informasi Ruang Terbuka Hijau Kabupaten/Kota di Jawa Barat', 'todo', 'DINAS PERMUKIMAN DAN PERUMAHAN PROVINSI JAWA BARAT', 'https://lpse.jabarprov.go.id/eproc/lelang/view/29895014', '2016-04-30', '2016-05-31', NULL);
 
 -- --------------------------------------------------------
 
@@ -311,6 +329,12 @@ CREATE TABLE `tim` (
 INSERT INTO `tim` (`username`, `id_tender`) VALUES
 ('asanilta', 2),
 ('asanilta', 3),
+('asanilta', 4),
+('asanilta', 5),
+('asanilta', 6),
+('asanilta', 7),
+('asanilta', 8),
+('siswanda', 6),
 ('vanydeasy', 3),
 ('vanydeasy', 5);
 
@@ -440,12 +464,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `dokumen`
 --
 ALTER TABLE `dokumen`
-  MODIFY `id_dokumen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dokumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `dokumen_tenaga_ahli`
 --
 ALTER TABLE `dokumen_tenaga_ahli`
-  MODIFY `id_dokumen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dokumen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `perusahaan`
 --
@@ -455,7 +479,7 @@ ALTER TABLE `perusahaan`
 -- AUTO_INCREMENT for table `tender`
 --
 ALTER TABLE `tender`
-  MODIFY `id_tender` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_tender` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- Constraints for dumped tables
 --

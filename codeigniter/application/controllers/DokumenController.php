@@ -8,8 +8,8 @@ class DokumenController extends CI_Controller {
 		$this->load->model('Dokumen');
 	}
 
-	function do_upload()  {
-		$config['upload_path'] = './dokumen/';
+	function do_upload($folder)  {
+		$config['upload_path'] = './dokumen/'.$folder;
 		$config['allowed_types'] = '*';
 		$config['remove_spaces'] = 'TRUE';
 
@@ -26,7 +26,7 @@ class DokumenController extends CI_Controller {
 		}
 	}
 
-	public function getDokumen($letak_dokumen == null) {
+	public function getDokumen($letak_dokumen = null) {
 		if($letak_dokumen == null) {
 			$response['content'] = $this->Dokumen->get_all();
 		}
