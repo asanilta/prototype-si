@@ -49,8 +49,9 @@ class DokumenController extends CI_Controller {
 		$this->sendJSON($response);
 	}
 
-	public function getDokumen($letak_dokumen = null) {
+	public function getDokumen() {
 		$path = './dokumen/';
+		$letak_dokumen = $this->input->post('letak_dokumen');
 		if($letak_dokumen == null) {
 			$response['content'] = $this->Dokumen->get_by_letak($path);
 		}

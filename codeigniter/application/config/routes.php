@@ -91,6 +91,5 @@ $route['api/user/get/(:any)'] = 'UserController/getUser/$1';
 /// API DOKUMEN ///
 $route['api/dokumen/get'] = 'DokumenController/getDokumen';
 $route['api/dokumen/get/all'] = 'DokumenController/getDokumen/all';
-$route['api/dokumen/get/(:any)'] = 'DokumenController/getDokumen/$1';
 $route['api/dokumen/upload']['POST'] = 'DokumenController/do_upload';
 $route['api/dokumen/newfolder'] = 'DokumenController/createFolder';
