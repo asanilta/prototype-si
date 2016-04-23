@@ -99,25 +99,23 @@
 
             <hr>
             <span class="m-n h4 text-grey padder">Tender Proyek Relevan</span>
-            <div class="m-n padder" ng-if="selectedTender.rekomendasi.tender==null">Tidak ada tender proyek yang relevan dengan tender ini</div>
-            <table class="table m-t-md" ng-if="selectedTender.rekomendasi.tender!=null">
+            <div class="m-n padder" ng-if="selectedTender.rekomendasi_tender==null">Tidak ada tender proyek yang relevan dengan tender ini</div>
+            <table class="table m-t-md" ng-if="selectedTender.rekomendasi_tender!=null">
                   <thead>
                       <tr>
                           <th>Nama</th>
                           <th>Instansi Pengada</th>
-                          <th>Tim</th>
                           <th>Bidang</th>
                           <th>Aksi</th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr ng-repeat="tender in selectedTender.rekomendasi.tender">
+                      <tr ng-repeat="tender in selectedTender.rekomendasi_tender">
                           <td>{{tender.nama_tender}}</td>
                           <td>{{tender.instansi_pengada}}</td>
-                          <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
-                          <td><span ng-repeat="bidang in tender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                          <td>{{tender.bidang_tender}}</span></td>
                           <td>
-                            <a class="text15" ng-click="searchDocument()" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a>
+                            <a class="text15" ng-click="openDirectory('Tender/'+tender.nama_tender+'/')" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a>
                           </td>
                       </tr>
                   </tbody>
@@ -130,7 +128,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="tenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
   <div class="modal-content">
       <div class="modal-header">
@@ -218,7 +216,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-danger" data-dismiss="modal" style="margin-bottom: 0"><span class="glyphicon glyphicon-remove"></span> Batal</button>
-          <button type="button" class="btn btn-primary btn-success" id="btn-save" ng-click="save()" ng-disabled="dataForm.$invalid"><span class="glyphicon glyphicon-ok"></span> Simpan</button>
+          <button type="button" class="btn btn-primary btn-success" id="btn-save" ng-click="save(tender)" ng-disabled="dataForm.$invalid"><span class="glyphicon glyphicon-ok"></span> Simpan</button>
       </div>
   </div>
 </div>
@@ -260,7 +258,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="perusahaan in selectedTender.rekomendasi.perusahaan | filter:perusahaan-query">
+                <tr ng-repeat="perusahaan in selectedTender.rekomendasi_perusahaan | filter:perusahaan-query">
                     <td>{{perusahaan.nama_perusahaan}}</td>
                     <td>{{perusahaan.telp}}</td>
                     <td>{{perusahaan.email}}</td>
@@ -297,7 +295,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="ta in selectedTender.rekomendasi.tenaga_ahli | filter:ta-query">
+                <tr ng-repeat="ta in selectedTender.rekomendasi_tenaga_ahli | filter:ta-query">
                     <td>{{ta.nama_tenaga_ahli}}</td>
                     <td>{{ta.jenis_kelamin}}</td>
                     <td>{{ta.telp}}</td>

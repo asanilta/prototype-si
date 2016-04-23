@@ -41,7 +41,7 @@
                                         <td>{{ta.telp}}</td>
                                         <td><span ng-repeat="bidang in ta.bidang_keahlian">{{bidang}}<span ng-show="!$last">, </span></span></td>
                                         <td>
-                                            <a class="text15" ng-click="searchDocument(ta.id_ktp)" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
+                                            <a class="text15" ng-click="openDirectory('Tenaga Ahli/'+ta.nama_tenaga_ahli+'-'+ta.id_ktp)" data-toggle="tooltip" title="Lihat Dokumen" data-placement="bottom"><i class="fa fa-folder-open"></i></a> |
                                             <a class="text15" ng-click="toggle('edit', ta.id_ktp)" data-toggle="tooltip" title="Sunting" data-placement="bottom"><i class="fa fa-edit"></i></a> |
                                             <a class="text15" ng-click="confirmDelete(ta.id_ktp)" data-toggle="tooltip" title="Hapus" data-placement="bottom"><i class="fa fa-trash"></i></a>
                                         </td>

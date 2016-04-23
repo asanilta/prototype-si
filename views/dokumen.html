@@ -1,3 +1,109 @@
 <div class="bg-light lter b-b wrapper-md padder-md">
   <h1 class="m-n font-bold h3 text-grey padder" style="display:inline-block">Arsip Dokumen</h1>
 </div>
+
+<div class="wrapper-lg bg-light">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row m-b-sm">
+            <div class="col-sm-12">
+              <button class="btn btn-info btn-icon"><i class="text20 fa fa-home"></i></button>
+              <button class="btn btn-info btn-icon" ng-click="openDirectory(currentDirectory.up_level)"><i class="text20 fa fa-level-up" ng-disabled="currentDirectory.up_level==null"></i></button>
+              <button class="btn btn-success" data-toggle="modal" data-target="#upload-file"><i class="fa fa-upload"></i> Unggah File</button>
+              <button class="btn btn-warning"  data-toggle="modal" data-target="#new-folder"><i class="fa fa-folder"></i> <i class="fa fa-plus"></i> Folder Baru</button>
+            </div>
+          </div>
+            <div class="row m-b-lg">
+              <div class="col-sm-8">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" value="{{currentDirectory.path}}">
+                  <span class="input-group-btn">
+                    <button class="btn btn-sm btn-default" type="button"><i class="fa fa-arrow-right"></i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-sm-4 pull-right">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" placeholder="Cari di folder ini..." ng-model="query">
+                  <span class="input-group-btn">
+                    <button class="btn btn-sm btn-default" type="button"><i class="fa fa-search"></i></button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <span class="h3 m-t-lg"> {{currentDirectory.name}}</span>
+
+          <hr>
+          <table class="table">
+            <thead>
+              <th style="width:3%"></th>
+              <th>Nama</th>
+              <th>Tipe</th>
+              <th>Ukuran</th>
+              <th>Tanggal Dibuat</th>
+              <th>Dibuat Oleh</th>
+              <th>Aksi</th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="dokumen in currentDirectory.contents | filter: query">
+                <td>
+                  <i ng-if="dokumen.jenis_dokumen=='pdf'" class="fa fa-file-pdf-o"></i>
+                  <i ng-if="dokumen.jenis_dokumen=='doc' || dokumen.jenis_dokumen=='docx'" class="fa fa-file-word-o"></i>
+                  <i ng-if="dokumen.jenis_dokumen=='xls' || dokumen.jenis_dokumen=='xlsx'" class="fa fa-file-excel-o"></i>
+                  <i ng-if="dokumen.jenis_dokumen=='jpg' || dokumen.jenis_dokumen=='jpeg' || dokumen.jenis_dokumen=='png'" class="fa fa-file-image-o"></i>
+                  <i ng-if="dokumen.jenis_dokumen=='zip' || dokumen.jenis_dokumen=='rar'" class="fa fa-file-zip-o"></i>
+                  <i ng-if="dokumen.jenis_dokumen=='ppt' || dokumen.jenis_dokumen=='pptx'" class="fa fa-file-powerpoint-o"></i>
+                  <i ng-if="dokumen.jenis_dokumen=='txt'" class="fa fa-file-text-o"></i>
+                  <i ng-if="dokumen.jenis_dokumen=='folder'" class="fa fa-folder"></i>
+                </td>
+                <td ng-if="dokumen.jenis_dokumen!='folder'"><a class="text-info" target="_blank" href="{{dokumen.letak_dokumen}}{{dokumen.nama_dokumen}}.{{dokumen.jenis_dokumen}}">{{dokumen.nama_dokumen}}.{{dokumen.jenis_dokumen}}</a></td>
+                <td ng-if="dokumen.jenis_dokumen=='folder'"><a class="text-info" ng-click="openDirectory(dokumen.letak_dokumen+dokumen.nama_dokumen+'/')">{{dokumen.nama_dokumen}}</a></td>
+                <td>{{dokumen.jenis_dokumen}}</td>
+                <td>{{dokumen.ukuran}}</td>
+                <td>{{dokumen.tanggal_buat}}</td>
+                <td>{{dokumen.username}}</td>
+                <!-- <td>  <a class="text15" ng-click="toggle('edit', dokumen.id_dokumen)" data-toggle="tooltip" title="Sunting" data-placement="bottom"><i class="fa fa-edit"></i></a> | -->
+                <td><a class="text15" ng-click="confirmDelete(dokumen.id_dokumen)" data-toggle="tooltip" title="Hapus" data-placement="bottom"><i class="fa fa-trash"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="upload-file" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Unggah Dokumen</h4>
+            </div>
+            <div class="modal-body">
+                <input type="file" class="m-b-lg" ngf-select ng-model="file" required/>
+                <button class="btn btn-primary" type="submit" value="upload">Unggah</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="new-folder" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Folder Baru</h4>
+            </div>
+            <div class="modal-body">
+                <form name="newFolderForm" class="form-horizontal" novalidate="">
+                  <input type="text" placeholder="Nama folder (wajib diisi)" class="m-b-lg form-control" name="folderName" ng-model="folderName" ng-required="true"/>
+                  <button class="btn btn-primary" ng-click="newFolder(folderName)" ng-disabled="newFolderForm.$invalid">Buat Folder Baru</button>
+              </form>
+            </div>
+        </div>
+    </div>
+</div>
