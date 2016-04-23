@@ -15,8 +15,8 @@
                       </span>
                     </div>
                   </div>
-                  <div class="pull-right">
-                    <button id="btn-add" class="btn m-b-sm m-r-sm pull-right btn-success" ng-click="toggle('add', 0)" style="display:inline-block"><i class="m-r-xs fa fa-plus"></i> Tambah Tender Proyek Baru</button>
+                  <div ng-if="user.role=='staf'" class="pull-right">
+                    <button id="btn-add" class="btn m-b-sm m-r-sm pull-right btn-success" ng-click="toggle('add')" style="display:inline-block"><i class="m-r-xs fa fa-plus"></i> Tambah Tender Proyek Baru</button>
                   </div>
                   <table class="table">
                       <thead>
@@ -27,6 +27,7 @@
                               <th>Tenggat Waktu Akhir</th>
                               <th>Tim</th>
                               <th>Bidang</th>
+                              <th></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -36,8 +37,9 @@
                               <td>{{tender.instansi_pengada}}</td>
                               <td>{{tender.tenggat_prakualifikasi}}</td>
                               <td>{{tender.tenggat_akhir}}</td>
-                              <td><span ng-repeat="tim in tender.tim">{{tim}}<span ng-show="!$last">, </span></span></td>
+                              <td><span ng-repeat="tim in tender.tim">{{tim.nama_lengkap}}<span ng-show="!$last">, </span></span></td>
                               <td><span ng-repeat="bidang in tender.bidang_tender">{{bidang}}<span ng-show="!$last">, </span></span></td>
+                              <td><button class="btn btn-primary" ng-click="selectTender(tender.id_tender)">Pilih</button></td>
                           </tr>
                       </tbody>
                   </table>
@@ -48,16 +50,11 @@
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
-</div>
-</div>
 <!-- /content -->
 
 
 <!-- Modal (Pop up when add/edit button clicked) -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="tenderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
   <div class="modal-content">
       <div class="modal-header">
@@ -65,14 +62,14 @@
           <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
       </div>
       <div class="modal-body">
-          <form name="dataForm" class="form-horizontal" novalidate="">
+          <form name="tenderForm" class="form-horizontal" novalidate="">
 
               <div class="form-group error">
                   <label for="nama_tender" class="col-sm-3 control-label">Nama Tender*</label>
                   <div class="col-sm-9">
                       <input required type="text" class="form-control has-error" id="nama_tender" name="nama_tender" ng-model="tender.nama_tender" ng-required="true">
                       <span class="help-inline"
-                      ng-show="dataForm.nama_tender.$invalid && dataForm.nama_tender.$touched">Field harus diisi</span>
+                      ng-show="tenderForm.nama_tender.$invalid && tenderForm.nama_tender.$touched">Field harus diisi</span>
                   </div>
               </div>
 
@@ -81,7 +78,7 @@
                   <div class="col-sm-9">
                       <textarea required class="form-control" id="instansi_pengada" name="instansi_pengada" ng-model="tender.instansi_pengada" ng-required="true"></textarea>
                       <span class="help-inline"
-                      ng-show="dataForm.instansi_pengada.$invalid && dataForm.instansi_pengada.$touched">Field harus diisi</span>
+                      ng-show="tenderForm.instansi_pengada.$invalid && tenderForm.instansi_pengada.$touched">Field harus diisi</span>
                   </div>
               </div>
 
@@ -90,7 +87,7 @@
                   <div class="col-sm-9">
                       <input required type="text" class="form-control has-error" id="url" name="url" ng-model="tender.url" ng-required="true">
                       <span class="help-inline"
-                      ng-show="dataForm.url.$invalid && dataForm.url.$touched">Field harus diisi</span>
+                      ng-show="tenderForm.url.$invalid && tenderForm.url.$touched">Field harus diisi</span>
                   </div>
               </div>
 
@@ -99,7 +96,7 @@
                   <div class="col-sm-9">
                       <input required ng-required="true" type="text" class="form-control has-error" id="tenggat_prakualifikasi" name="tenggat_prakualifikasi" ng-model="tender.tenggat_prakualifikasi">
                       <span class="help-inline"
-                      ng-show="dataForm.tenggat_prakualifikasi.$invalid && dataForm.tenggat_prakualifikasi.$touched">Field harus diisi</span>
+                      ng-show="tenderForm.tenggat_prakualifikasi.$invalid && tenderForm.tenggat_prakualifikasi.$touched">Field harus diisi</span>
                   </div>
               </div>
 
@@ -108,7 +105,7 @@
                   <div class="col-sm-9">
                       <input required ng-required="true" type="text" class="form-control has-error" id="tenggat_akhir" name="tenggat_akhir" ng-model="tender.tenggat_akhir">
                       <span class="help-inline"
-                      ng-show="dataForm.tenggat_akhir.$invalid && dataForm.tenggat_akhir.$touched">Field harus diisi</span>
+                      ng-show="tenderForm.tenggat_akhir.$invalid && tenderForm.tenggat_akhir.$touched">Field harus diisi</span>
                   </div>
               </div>
 
@@ -122,7 +119,7 @@
                           </ui-select-choices>
                         </ui-select>
                       <!-- <span class="help-inline"
-                      ng-show="dataForm.bidang.$invalid && dataForm.bidang.$touched">Field harus diisi</span> -->
+                      ng-show="tenderForm.bidang.$invalid && tenderForm.bidang.$touched">Field harus diisi</span> -->
                   </div>
               </div>
 
@@ -136,7 +133,7 @@
                           </ui-select-choices>
                         </ui-select>
                       <!-- <span class="help-inline"
-                      ng-show="dataForm.bidang.$invalid && dataForm.bidang.$touched">Field harus diisi</span> -->
+                      ng-show="tenderForm.bidang.$invalid && tenderForm.bidang.$touched">Field harus diisi</span> -->
                   </div>
               </div>
 
@@ -145,7 +142,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-danger" data-dismiss="modal" style="margin-bottom: 0"><span class="glyphicon glyphicon-remove"></span> Batal</button>
-          <button type="button" class="btn btn-primary btn-success" id="btn-save" ng-click="save()" ng-disabled="dataForm.$invalid"><span class="glyphicon glyphicon-ok"></span> Simpan</button>
+          <button type="button" class="btn btn-primary btn-success" id="btn-save" ng-click="save()" ng-disabled="tenderForm.$invalid"><span class="glyphicon glyphicon-ok"></span> Simpan</button>
       </div>
   </div>
 </div>
@@ -161,3 +158,7 @@
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-primary" id="btn-ok" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>

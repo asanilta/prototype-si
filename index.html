@@ -19,7 +19,7 @@
 </head>
 <body ng-app="tesaApp" ng-controller="tenderController">
   <div class="app app-header-fixed ">
-    <ng-include src="'views/menu.html'"></ng-include>
+    <div ng-include src="'views/menu.html'"></div>
     <div id="content" class="app-content" role="main">
       <div class="hbox hbox-auto-xs hbox-auto-sm ng-scope">
         <div class="col">
@@ -45,6 +45,7 @@
 <script src="public/js/angular-route.min.js"></script>
 <script src="public/js/select.min.js"></script>
 <script src="public/js/angular-sanitize.min.js"></script>
+<script src="public/js/angular-cookies.min.js"></script>
 
 <!-- Angular Scripts -->
 <script src="app.js"></script>
@@ -53,6 +54,7 @@
 <script src="controllers/tenagaAhliController.js"></script>
 <script src="controllers/perusahaanController.js"></script>
 <script src="controllers/progresController.js"></script>
+<script src="controllers/dokumenController.js"></script>
 
 <!-- Plugins -->
 <script src="public/js/elfinder.min.js"></script>

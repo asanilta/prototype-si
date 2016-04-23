@@ -1,4 +1,4 @@
-var tesaApp = angular.module('tesaApp', ['ngRoute','ui.select','ngSanitize']);
+var tesaApp = angular.module('tesaApp', ['ngRoute','ui.select','ngSanitize','ngCookies']);
 tesaApp.config(['$routeProvider', function($routeProvider) {
 
        // $locationProvider.html5Mode(true);
@@ -7,6 +7,9 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
        $routeProvider
            .when('/', {
              templateUrl : 'views/daftar-tender.html',
+           })
+           .when('/login', {
+             templateUrl : 'views/login.html'
            })
            .when('/tender', {
              templateUrl : 'views/daftar-tender.html',
@@ -19,7 +22,8 @@ tesaApp.config(['$routeProvider', function($routeProvider) {
              controller : 'tenagaAhliController'
            })
            .when('/dokumen', {
-             templateUrl: 'views/dokumen.html'
+             templateUrl: 'views/dokumen.html',
+             controller : 'dokumenController'
            })
            .when('/perusahaan-mitra', {
              templateUrl: 'views/perusahaan-mitra.html',
